@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="peopleManageController as pplController">
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <h2 style="text-align:center">Manage</h2>
+            <input type="hidden" value="@Model.Item" id="manageId" />
+            <form ng-submit="pplController.submit()">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" ng-model="pplController.item.firstName" placeholder="First Name" />
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" ng-model="pplController.item.lastName" placeholder="Last Name" />
+                </div>
+                <br />
+                <a href="/People/Index" class="btn btn-primary">Back To Index</a>
+                <input type="submit" class="btn btn-primary" ng-value="pplController.modelId ? 'Edit' : 'Create'" />
+            </form>
+            <br />
+        </div>
+        <div class="col-md-offset-2">
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .factory('$peopleService', PeopleService)
+
+            PeopleService.$inject = ['$http'];
+
+            function PeopleService($http) {
+                return {
+                    createPerson: _createPerson,
+                    editPerson: _editPerson,
+                    getPerson: _getPerson
+                };
+
+                function _getPerson(id) {
+                    return $http.get('/api/people/' + id)
+                        .then(onSuccessGetPerson)
+                        .catch(onError);
+                }
+
+                function _createPerson(data) {
+                    return $http.post('/api/people', data)
+                        .then(onSuccessCreatePerson)
+                        .catch(onError);
+                }
+
+                function _editPerson(data) {
+                    return $http.put('/api/people', data)
+                        .then(onSuccessEditPerson)
+                        .catch(onError);
+                }
+
+                function onSuccessGetPerson(response) {
+                    return response.data;
+                }
+
+                function onSuccessCreatePerson(response) {
+                    return response.data;
+                }
+
+                function onSuccessEditPerson(response) {
+                    return response.data;
+                }
+
+                function onError() {
+                    console.log("Sucks");
+                }
+            }
+        })();
+    </script>
+
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .controller('peopleManageController', PeopleManageController)
+
+            PeopleManageController.$inject = ['$scope', '$peopleService'];
+
+            function PeopleManageController($scope, $peopleService) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.$peopleService = $peopleService;
+                vm.item = null;
+                vm.submit = _submit;
+                vm.getPersonSuccess = _getPersonSuccess;
+                vm.successCreation = _successCreation;
+                vm.successEdit = _successEdit;
+                vm.modelId = $("#manageId").val();
+
+                render()
+
+                function render() {
+                    if (vm.modelId > 0) {
+                        return $peopleService.getPerson(vm.modelId)
+                            .then(vm.getPersonSuccess)
+                    }
+                }
+                function _submit() {
+                    if (vm.modelId > 0) {
+                        vm.item.id = vm.modelId;
+                        return $peopleService.editPerson(vm.item)
+                            .then(vm.successEdit)
+                    }
+                    else {
+                        return $peopleService.createPerson(vm.item)
+                            .then(vm.successCreation)
+
+                    }
+                }
+
+                function _getPersonSuccess(data) {
+                    vm.item = data.item;
+                }
+
+                function _successCreation(data) {
+                    self.location = "/People/Index"
+                }
+
+                function _successEdit(data) {
+                    self.location = "/People/Index"
+                }
+
+            }
+        })();
+    </script>
+}
+
+
+

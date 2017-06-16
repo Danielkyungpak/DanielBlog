@@ -23,8 +23,6 @@ namespace DanielBlog.Web
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/tether").Include(
-                        "~/Scripts/tether.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
@@ -32,9 +30,9 @@ namespace DanielBlog.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/tether.css",
-                      "~/Content/cover.css"));
+                      "~/Content/bootstrap-theme.min.css",
+                      "~/Content/bootstrap-theme.min.css.map",
+                      "~/Content/site.css"));
         }
     }
 }

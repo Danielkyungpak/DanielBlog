@@ -4,14 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>People Index Daniel</h2>
 
 <div ng-controller="peopleController as pplCtrl">
+    <h2>People Index Daniel</h2>
+
     <table class="table">
         <thead>
             <tr>
                 <td>
-                    <input type="button" class="btn btn-primary" ng-click="" value="Create" />
+                    <a class="btn btn-primary" href="/People/Create">Create</a>
                 </td>
             </tr>
             <tr>
@@ -45,8 +46,16 @@
 
             function PeopleService($http) {
                 return {
-                    getPeople: _getPeople
+                    getPeople: _getPeople,
+                    deletePerson: _deletePerson
+
                 };
+
+                function _deletePerson(id) {
+                    return $http.delete("/api/people/" + id)
+                        .then(onSuccessDeletePerson)
+                        .catch(onError);
+                }
 
 
                 function _getPeople() {
@@ -60,7 +69,10 @@
                     console.log("successfully receieved data");
                     return response.data;
                 }
-
+                function onSuccessDeletePerson(response) {
+                    console.log("deleted")
+                    return response.data;
+                }
                 function onError() {
                     console.log("Sucks");
                 }
@@ -82,6 +94,10 @@
 
                 vm.items = null;
                 vm.getPeople = _getPeople;
+                vm.item = null;
+                vm.edit = _edit;
+                vm.delete = _delete;
+                vm.deleteItem = null;
 
 
                 render();
@@ -104,8 +120,45 @@
                 function onCompleteGetPeople() {
                     console.log("on complete get people");
                 }
+                function _edit(data) {
+                    self.location = "/People/" + data.id + "/edit";
+                }
 
+                function _delete(item) {
+                    vm.deleteItem = item;
+                    return $peopleService.deletePerson(vm.deleteItem.id)
+                        .then(deletePersonSuccess)
+                }
+                function deletePersonSuccess(data) {
+                    console.log(data);
+                    if (data.isSuccessful == true) {
+                        var index = vm.items.indexOf(vm.deleteItem);
+                        vm.items.splice(index, 1);
+                    }
+                }
             }
         })();
+
+
+
+        function addLetter(letter) {
+            $("#result").html($('#result').html() + letter);
+        }
+
+        $(window).load(function () {
+            addLetter('a')
+        })
+
+        $(function () {
+            addLetter('b');
+        })
+
+        $(window).on("load", function () {
+            addLetter('c');
+        })
+
+        $(document).ready(function () {
+            addLetter('d');
+        })
     </script>
 }

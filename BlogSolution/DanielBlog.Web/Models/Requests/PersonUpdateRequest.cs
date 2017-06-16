@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Project.Web.Models.View
+namespace DanielBlog.Web.Models.Requests
 {
-    public class Person
+    public class PersonUpdateRequest
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

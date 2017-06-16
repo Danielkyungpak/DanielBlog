@@ -1,7 +1,14 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url("https://source.unsplash.com/daily");
+    background-size: 100%;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -16,9 +23,7 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.panel {
+    padding: 0px 30px 10px 30px;
 }
+
