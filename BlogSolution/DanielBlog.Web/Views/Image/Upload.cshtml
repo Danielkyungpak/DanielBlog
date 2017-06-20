@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Upload</h2>
+
+<div ng-controller="uploadController as upCtrl">
+    <form enctype="multipart/form-data" name="picForm">
+        <input type="file" name="pic" id="uploadedFile" accept="image/*">
+        <input type="submit" ng-click="upCtrl.imageUpload()">
+    </form>
+</div>
+
+@section scripts{
+    <script>
+        (function () {
+            angular.module("myApp")
+                .factory('$uploadService', UploadService)
+
+            UploadService.$inject = ['$http'];
+
+            function UploadService($http) {
+                return {
+                    uploadPost: _uploadPost
+                };
+
+                function _uploadPost(data) {
+                    return $http.post("/api/image", data, { transformRequest: angular.identity, headers: {'Content-Type': undefined}})
+                        .then(onSuccessAmazon)
+                        .catch(onError)
+                }
+
+                function onSuccessAmazon(response) {
+                    return response.data;
+                }
+                function onError() {
+                    console.log("Sucks");
+                }
+            }
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function () {
+            angular.module('myApp')
+                .controller("uploadController", UploadController)
+            UploadController.$inject = ['$scope', '$uploadService'];
+
+            function UploadController($scope, $uploadService) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.$uploadService = $uploadService;
+                vm.imageUpload = _imageUpload;
+                vm.uploadSuccess = _uploadSuccess;
+
+                render();
+
+                function render() {
+                }
+
+                function _imageUpload() {
+                    var imageObj = document.getElementById("uploadedFile").files[0];
+                    var formData = new FormData();
+                    formData.append("image", imageObj, "image");
+                    console.log(formData);
+                    return vm.$uploadService.uploadPost(formData)
+                        .then(vm.uploadSuccess)
+
+                }
+                function _uploadSuccess(response) {
+                    console.log(response);
+                }
+            }
+        })();
+    </script>
+}
+
+

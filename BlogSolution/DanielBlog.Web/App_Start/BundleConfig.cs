@@ -31,7 +31,6 @@ namespace DanielBlog.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-theme.min.css",
-                      "~/Content/bootstrap-theme.min.css.map",
                       "~/Content/site.css"));
         }
     }
