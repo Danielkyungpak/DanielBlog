@@ -10,7 +10,7 @@ using static DanielBlog.Web.Models.Poker.CardLogic;
 
 namespace DanielBlog.Web.Controllers.Api
 {
-    [RoutePrefix("Poker")]
+    [RoutePrefix("api/poker")]
     public class PokerApiController : ApiController
     {
         [Route("Deal"), HttpGet]

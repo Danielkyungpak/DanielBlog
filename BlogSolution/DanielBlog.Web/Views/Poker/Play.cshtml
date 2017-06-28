@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Play";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="pokerController as pokerCtrl">
+    <div class="row">
+        <h2>Lets Play Video Poker</h2>
+        <hr />
+    </div>
+    <div class="row">
+        <h2 ng-show="pokerCtrl.handRank" style="text-align:center">{{pokerCtrl.handRank}}</h2>
+        <h2 style="text-align:center" ng-hide="pokerCtrl.deal"> GAME OVER</h2>
+    </div>
+    <div class="row">
+
+        <div ng-repeat="card in pokerCtrl.items">
+            <div class="col-md-2">
+                <div ng-click="pokerCtrl.selectCard(card)" ng-class="{'bg-success' : !card.change}">
+                    <h1>{{card.value}} of {{card.suit}} </h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <br />
+            <input type="button" ng-show="pokerCtrl.deal" value="Deal" ng-click="pokerCtrl.dealHand(pokerCtrl.items)" class="btn-lg btn-primary" />
+            <input type="button" ng-hide="pokerCtrl.deal" value="Deal" ng-click="pokerCtrl.getHand()" class="btn-lg btn-primary" />
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        (function () {
+            angular.module("myApp")
+                .factory('$pokerService', PokerService)
+
+            PokerService.$inject = ['$http'];
+
+            function PokerService($http) {
+                return {
+                    getHand: _getHand,
+                    changeCards: _changeCards
+
+                };
+
+                function _getHand() {
+                    return $http.get('/api/poker/deal')
+                        .then(onSuccessGetCards)
+                        .catch(onError);
+                }
+
+                function _changeCards(data) {
+                    return $http.post('/api/poker/deal', data)
+                        .then(onSuccessGetCards)
+                        .catch(onError);
+                }
+
+                function onSuccessGetCards(response) {
+                    console.log("success u got cards");
+                    return response.data;
+                }
+
+                function onError() {
+                    console.log("Sucks");
+                }
+            }
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .controller("ModalController", function ($scope, $uibModalInstance, items, $window) {
+                    var vm = this;
+                    vm.submit = function () {
+                        $uibModalInstance.close()
+                    };
+                    vm.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                })
+        })();
+
+        (function () {
+            angular.module('myApp')
+                .controller("pokerController", PokerController)
+            PokerController.$inject = ['$scope', '$pokerService', '$uibModal'];
+
+            function PokerController($scope, $pokerService, $uibModal) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.$pokerService = $pokerService;
+                vm.getHand = _getHand;
+                vm.onHydratePage = _onHydratePage;
+                vm.items;
+                vm.dealHand = _dealHand;
+                vm.deal = false;
+                vm.handRank;
+                vm.selectCard = _selectCard;
+                
+                render();
+
+                function render() {
+                    console.log("rendering...")
+                    vm.getHand()
+                }
+
+                function _selectCard(card) {
+                    console.log(card);
+                    if (card.change == true) {
+                        card.change = false;
+                    }
+                    else {
+                        card.change = true;
+                    }
+                }
+
+                function _getHand() {
+                    return $pokerService.getHand()
+                        .then(vm.onHydratePage)
+                }
+                function _onHydratePage(data) {
+                    console.log(data);
+                    vm.items = data.cards;
+                    if (data.isRoyalStraightFlush) {
+                        vm.handRank = "Royal Straight Flush"
+                    }
+                    else if (data.isStraightFlush) {
+                        vm.handRank = "Straight flush"
+                    }
+                    else if (data.isStraight) {
+                        vm.handRank = "Straight"
+                    }
+                    else if (data.isFullHouse) {
+                        vm.handRank = "Full House"
+                    }
+                    else if (data.isFlush) {
+                        vm.handRank = "Flush"
+                    }
+                    else if (data.isFourOfAKind) {
+                        vm.handRank = "Four Of a Kind"
+                    }
+                    else if (data.isThreeOfAKind) {
+                        vm.handRank = "Three Of a Kind"
+                    }
+                    else if (data.isTwoPair) {
+                        vm.handRank = "Two Pair"
+                    }
+                    else if (data.isJacksOrBetter) {
+                        vm.handRank = "Jacks or Better"
+                    }
+                    else {
+                        vm.handRank = null;
+                    }
+
+
+                    if (vm.deal == true) {
+                        vm.deal = false;
+                    }
+                    else {
+                        vm.deal = true;
+                    }
+                    var modal = $uibModal.open({
+                        templateUrl: "/Content/ModalTemplates/AddCommentModal.html",
+                        controller: "ModalController",
+                        controllerAs: "modalCtrl",
+                        size: "md",
+                        backdrop: true,
+                        windowClass: "app-modal-window",
+                        resolve: {
+                            items: function () {
+                                return vm.items;
+                            }
+                        }
+                    });
+                    modal.result.then(function (selectedItem) {
+                        selectedItem.blogId = vm.blogId;
+                    }, function () {
+                        console.log("Modal closed")
+                    });
+                }
+
+                
+
+                function _dealHand() {
+                    return $pokerService.changeCards(vm.items)
+                        .then(vm.onHydratePage)
+                }
+            }
+        })();
+
+
+
+
+
+    </script>
+}

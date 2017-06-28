@@ -215,10 +215,12 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="Controllers\PokerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Domain\Blog.cs" />
     <Compile Include="Models\Poker\CardLogic.cs" />
     <Compile Include="Models\Requests\NewCardRequest.cs" />
     <Compile Include="Models\Requests\PersonAddRequest.cs" />
@@ -232,6 +234,7 @@
     <Compile Include="Models\View\ItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AmazonService.cs" />
+    <Compile Include="Services\BlogService.cs" />
     <Compile Include="Services\PeopleService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -280,10 +283,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\clean-blog.min.css" />
+    <Content Include="Content\ModalTemplates\AddCommentModal.html" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="script.sql" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -309,6 +315,10 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1129,6 +1139,7 @@
     <Content Include="Web.appsettings.Release.config">
       <DependentUpon>Web.appsettings.config</DependentUpon>
     </Content>
+    <Content Include="Views\Poker\Play.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

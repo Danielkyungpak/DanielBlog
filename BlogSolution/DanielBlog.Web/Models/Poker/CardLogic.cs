@@ -1,4 +1,6 @@
 ﻿using DanielBlog.Web.Models.Requests;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,26 +34,15 @@ namespace DanielBlog.Web.Models.Poker
             Queen,
             King
         }
-
-        public enum HandRank
-        {
-            Nothing,
-            Pair,
-            TwoPair,
-            Trips,
-            Straight,
-            Flush,
-            FullHouse,
-            Quads,
-            StraightFlush,
-            RoyalFlush
-        }
-
         public class Card
         {
+            [JsonConverter(typeof(StringEnumConverter))]
             public Suit Suit { get; set; }
+
+            [JsonConverter(typeof(StringEnumConverter))]
             public Value Value { get; set; }
             public bool Change { get; set; }
+
         }
 
         public class Hand
@@ -77,11 +68,39 @@ namespace DanielBlog.Web.Models.Poker
             {
                 get
                 {
-                    if (Cards.GroupBy(h => h.Value == Value.Ace || h.Value == Value.King || h.Value == Value.Queen || h.Value == Value.Jack)
-                        .Where(g => g.Count() == 2)
-                        .Count() == 1)
+                    if (Contains(Value.Ace) ||
+                        Contains(Value.King) ||
+                        Contains(Value.Queen) ||
+                        Contains(Value.Jack))
                     {
-                        return true;
+                        if (Cards.GroupBy(h => h.Value == Value.Ace)
+                            .Where(g => g.Count() == 2)
+                            .Count() == 1)
+                        {
+                            return true;
+                        }
+                        else if (Cards.GroupBy(h => h.Value == Value.King)
+                            .Where(g => g.Count() == 2)
+                            .Count() == 1)
+                        {
+                            return true;
+                        }
+                        else if (Cards.GroupBy(h => h.Value == Value.Queen)
+                           .Where(g => g.Count() == 2)
+                           .Count() == 1)
+                        {
+                            return true;
+                        }
+                        else if (Cards.GroupBy(h => h.Value == Value.Jack)
+                           .Where(g => g.Count() == 2)
+                           .Count() == 1)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
@@ -191,7 +210,7 @@ namespace DanielBlog.Web.Models.Poker
                 {
                     foreach (Value value in Enum.GetValues(typeof(Value)))
                     {
-                        cards.Add(new Card { Suit = suit, Value = value, Change = false });
+                        cards.Add(new Card { Suit = suit, Value = value, Change = true });
 
                     }
                 }

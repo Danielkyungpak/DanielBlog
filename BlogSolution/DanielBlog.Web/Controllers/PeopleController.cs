@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DanielBlog.Web.Controllers
 {
+
     [RoutePrefix("People")]
     public class PeopleController : Controller
     {

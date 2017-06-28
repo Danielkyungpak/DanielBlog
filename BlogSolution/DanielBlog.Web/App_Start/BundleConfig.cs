@@ -16,6 +16,8 @@ namespace DanielBlog.Web
 
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                         "~/Scripts/angular.js",
+                        "~/Scripts/angular-ui/ui-bootstrap.js",
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
                         "~/Scripts/ng.app/ng.app.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
