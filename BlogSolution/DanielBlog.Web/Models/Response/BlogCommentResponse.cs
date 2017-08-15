@@ -5,9 +5,7 @@ using System.Web;
 
 namespace DanielBlog.Web.Models.Response
 {
-    public class SuccessResponse
+    public class BlogCommentResponse
     {
-        public string Response { get; set; }
-        public bool IsSuccessful { get; set; }
     }
 }

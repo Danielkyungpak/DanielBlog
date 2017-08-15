@@ -1,22 +1,150 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+<div ng-controller="userController as userCtrl">
+    @if (Request.IsAuthenticated)
     {
-    @Html.AntiForgeryToken()
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>
+        }
     }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="" ng-click="userCtrl.openRegisterModal()">Register</a></li>
+            <li><a href="" ng-click="userCtrl.openLoginModal()">Login</a></li>
+        </ul>
+    }
+</div>
+
+<script type="text/javascript">
+    (function () {
+        angular.module("myApp")
+            .factory('$userService', UserService)
+
+        UserService.$inject = ['$http'];
+
+        function UserService($http) {
+            return {
+                register: _register
+                //getHand: _getHand,
+                //changeCards: _changeCards
+
+            };
+
+            function _register(data) {
+                return $http.post('/api/user/register', data)
+                    .then(onSuccess)
+                    .catch(onError);
+            }
+
+            //function _changeCards(data) {
+            //    return $http.post('/api/poker/deal', data)
+            //        .then(onSuccessGetCards)
+            //        .catch(onError);
+            //}
+
+            function onSuccess(response) {
+                return response.data;
+            }
+
+            function onError() {
+                console.log("Something went wrong");
+            }
+        }
+    })();
+</script>
+
+
+
+<script type="text/javascript">
+    (function () {
+        angular.module("myApp")
+            .controller("ModalController", function ($scope, $uibModalInstance, $window, $userService) {
+                var vm = this;
+                vm.$userService = $userService;
+
+                vm.registerSubmit = function (item) {
+                    return $userService.register(item)
+                        .then(vm.registerSuccess)
+                };
+
+                vm.registerSuccess = function (response) {
+                    $uibModalInstance.close()
+
+                }
+                vm.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            })
+
+    })();
+
+
+    (function () {
+        angular.module('myApp')
+            .controller("userController", UserController)
+        UserController.$inject = ['$scope', '$userService', '$uibModal'];
+
+        function UserController($scope, $userService, $uibModal) {
+            var vm = this;
+            vm.$scope = $scope;
+            vm.$userService = $userService;
+            vm.$uibModal = $uibModal;
+            vm.openRegisterModal = _openRegisterModal;
+            vm.openLoginModal = _openLoginModal;
+
+            function _openRegisterModal() {
+                var modal = $uibModal.open({
+                    templateUrl: "/Content/ModalTemplates/Register.html",
+                    controller: "ModalController",
+                    controllerAs: "modalCtrl",
+                    size: "md",
+                    backdrop: true,
+                    windowClass: "app-modal-window",
+                }).result.then(function () {
+                }, function (res) {
+                });
+            }
+
+            function _openLoginModal() {
+                var modal = $uibModal.open({
+                    templateUrl: "/Content/ModalTemplates/Login.html",
+                    controller: "ModalController",
+                    controllerAs: "modalCtrl",
+                    size: "md",
+                    backdrop: true,
+                    windowClass: "app-modal-window",
+                }).result.then(function () {
+                }, function (res) {
+                });
+            }
+
+            //var modal = $uibModal.open({
+            //    templateUrl: "/Content/ModalTemplates/AddCommentModal.html",
+            //    controller: "ModalController",
+            //    controllerAs: "modalCtrl",
+            //    size: "md",
+            //    backdrop: true,
+            //    windowClass: "app-modal-window",
+            //    resolve: {
+            //        items: function () {
+            //            return vm.items;
+            //        }
+            //    }
+            //});
+            //modal.result.then(function (selectedItem) {
+            //    selectedItem.blogId = vm.blogId;
+            //}, function () {
+            //    console.log("Modal closed")
+            //});
+        }
+    })();
+
+</script>

@@ -20,8 +20,9 @@ namespace DanielBlog.Web.Controllers.Api
         public HttpResponseMessage GetPeople()
         {
             PeopleService peopleService = new PeopleService();
-            List<Person> peopleList = peopleService.GetPeople();
-            return Request.CreateResponse(HttpStatusCode.OK, peopleList);
+            ItemsResponse<Person> response = new ItemsResponse<Person>();
+            response.Items = peopleService.GetPeople();
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [Route("{id:int}"), HttpGet]
         public HttpResponseMessage GetPerson([FromUri] int id)

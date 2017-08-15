@@ -20,17 +20,11 @@ namespace DanielBlog.Web.Services
         {
             try
             {
-                //get unique Id GUID
                 var g = Guid.NewGuid();
-                //create the path...where pic is stored and how to get it later
                 string fileNameAtAws = g.ToString() + "_" + fileName.Replace("+", "0");
-                //create local variable to store credentials
                 AWSCredentials awsCredentials = new BasicAWSCredentials(AWSAccessKey, AWSSecret);
-                //create a new client with the keys we have-- to access Amazon AWS
                 AmazonS3Client client = new AmazonS3Client(awsCredentials, Amazon.RegionEndpoint.USWest1);
-                //create transfer utility and pass client in as a parameter
                 TransferUtility fileTransferUtility = new TransferUtility(client);
-                //make request in a way that Amazon can read what we are sending (upload Request)
                 TransferUtilityUploadRequest uploadRequest = new TransferUtilityUploadRequest();
                 uploadRequest.BucketName = AWSBucketName;
                 uploadRequest.InputStream = fileStream;

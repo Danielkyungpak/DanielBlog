@@ -71,25 +71,25 @@
 
 
     <script type="text/javascript">
-        (function () {
-            angular.module("myApp")
-                .controller("ModalController", function ($scope, $uibModalInstance, items, $window) {
-                    var vm = this;
-                    vm.submit = function () {
-                        $uibModalInstance.close()
-                    };
-                    vm.cancel = function () {
-                        $uibModalInstance.dismiss('cancel');
-                    };
-                })
-        })();
+        //(function () {
+        //    angular.module("myApp")
+        //        .controller("ModalController", function ($scope, $uibModalInstance, items, $window) {
+        //            var vm = this;
+        //            vm.submit = function () {
+        //                $uibModalInstance.close()
+        //            };
+        //            vm.cancel = function () {
+        //                $uibModalInstance.dismiss('cancel');
+        //            };
+        //        })
+        //})();
 
         (function () {
             angular.module('myApp')
                 .controller("pokerController", PokerController)
-            PokerController.$inject = ['$scope', '$pokerService', '$uibModal'];
+            PokerController.$inject = ['$scope', '$pokerService'/*, '$uibModal'*/];
 
-            function PokerController($scope, $pokerService, $uibModal) {
+            function PokerController($scope, $pokerService/*, $uibModal*/) {
                 var vm = this;
                 vm.$scope = $scope;
                 vm.$pokerService = $pokerService;
@@ -163,24 +163,24 @@
                     else {
                         vm.deal = true;
                     }
-                    var modal = $uibModal.open({
-                        templateUrl: "/Content/ModalTemplates/AddCommentModal.html",
-                        controller: "ModalController",
-                        controllerAs: "modalCtrl",
-                        size: "md",
-                        backdrop: true,
-                        windowClass: "app-modal-window",
-                        resolve: {
-                            items: function () {
-                                return vm.items;
-                            }
-                        }
-                    });
-                    modal.result.then(function (selectedItem) {
-                        selectedItem.blogId = vm.blogId;
-                    }, function () {
-                        console.log("Modal closed")
-                    });
+                    //var modal = $uibModal.open({
+                    //    templateUrl: "/Content/ModalTemplates/AddCommentModal.html",
+                    //    controller: "ModalController",
+                    //    controllerAs: "modalCtrl",
+                    //    size: "md",
+                    //    backdrop: true,
+                    //    windowClass: "app-modal-window",
+                    //    resolve: {
+                    //        items: function () {
+                    //            return vm.items;
+                    //        }
+                    //    }
+                    //});
+                    //modal.result.then(function (selectedItem) {
+                    //    selectedItem.blogId = vm.blogId;
+                    //}, function () {
+                    //    console.log("Modal closed")
+                    //});
                 }
 
                 

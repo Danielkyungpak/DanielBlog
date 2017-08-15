@@ -30,6 +30,7 @@ namespace DanielBlog.Web.Controllers.Api
             string newImage = aws.UploadFile(postedFile.InputStream, postedFile.FileName);
 
             SuccessResponse response = new SuccessResponse();
+            response.Response = newImage;
             response.IsSuccessful = true;
             return Request.CreateResponse(HttpStatusCode.OK, response);
 

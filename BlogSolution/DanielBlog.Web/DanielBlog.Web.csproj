@@ -57,8 +57,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid, Version=9.5.2.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.7.0\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -208,34 +214,49 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\BlogApiController.cs" />
     <Compile Include="Controllers\Api\ImageApiController.cs" />
     <Compile Include="Controllers\Api\PeopleApiController.cs" />
     <Compile Include="Controllers\Api\PokerApiController.cs" />
+    <Compile Include="Controllers\Api\UserApiController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PokerController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Exceptions\IdentityResultException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Domain\Blog.cs" />
     <Compile Include="Models\Poker\CardLogic.cs" />
+    <Compile Include="Models\Requests\BlogAddRequest.cs" />
+    <Compile Include="Models\Requests\BlogUpdateRequest.cs" />
+    <Compile Include="Models\Requests\CommentAddRequest.cs" />
+    <Compile Include="Models\Requests\CommentUpdateRequest.cs" />
+    <Compile Include="Models\Requests\ConfirmEmailRequest.cs" />
     <Compile Include="Models\Requests\NewCardRequest.cs" />
     <Compile Include="Models\Requests\PersonAddRequest.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Domain\Person.cs" />
     <Compile Include="Models\Requests\PersonUpdateRequest.cs" />
+    <Compile Include="Models\Requests\UserRegisterRequest.cs" />
+    <Compile Include="Models\Response\BlogCommentResponse.cs" />
     <Compile Include="Models\Response\ItemResponse.cs" />
+    <Compile Include="Models\Response\ItemsResponse.cs" />
     <Compile Include="Models\Response\SuccessResponse.cs" />
     <Compile Include="Models\View\ItemsViewModel.cs" />
     <Compile Include="Models\View\ItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AmazonService.cs" />
     <Compile Include="Services\BlogService.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\PeopleService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -279,11 +300,14 @@
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
     <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\blogtemplate.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\clean-blog.min.css" />
     <Content Include="Content\ModalTemplates\AddCommentModal.html" />
+    <Content Include="Content\ModalTemplates\Login.html" />
+    <Content Include="Content\ModalTemplates\Register.html" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1085,13 +1109,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -1123,27 +1140,17 @@
     <Content Include="Views\People\Manage.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Image\Upload.cshtml" />
-    <Content Include="Web.private.config" />
-    <Content Include="Web.private.Debug.config">
-      <DependentUpon>Web.private.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.private.Release.config">
-      <DependentUpon>Web.private.config</DependentUpon>
-    </Content>
-    <Content Include="Web.appsettings.config" />
-    <Content Include="Web.appsettings.Debug.config">
-      <DependentUpon>Web.appsettings.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.appsettings.Release.config">
-      <DependentUpon>Web.appsettings.config</DependentUpon>
-    </Content>
     <Content Include="Views\Poker\Play.cshtml" />
+    <Content Include="Web.private.config" />
+    <Content Include="Web.appsettings.config" />
+    <Content Include="Views\Blog\Manage.cshtml" />
+    <Content Include="Views\Blog\Blog.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Shared\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
