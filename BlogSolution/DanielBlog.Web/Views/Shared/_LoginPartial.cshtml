@@ -10,7 +10,8 @@
                 <li>
                     @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                 </li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                <li><a href="" ng-click="userCtrl.logoutSubmit()">Log Off</a></li>
+
             </ul>
         }
     }
@@ -32,14 +33,25 @@
 
         function UserService($http) {
             return {
-                register: _register
-                //getHand: _getHand,
-                //changeCards: _changeCards
-
+                register: _register,
+                login: _login,
+                logout: _logout
             };
 
             function _register(data) {
                 return $http.post('/api/user/register', data)
+                    .then(onSuccess)
+                    .catch(onError);
+            }
+
+            function _login(data) {
+                return $http.post('/api/user/login', data)
+                    .then(onSuccess)
+                    .catch(onError);
+            }
+
+            function _logout() {
+                return $http.post('/api/user/logout')
                     .then(onSuccess)
                     .catch(onError);
             }
@@ -51,6 +63,7 @@
             //}
 
             function onSuccess(response) {
+                console.log("success?")
                 return response.data;
             }
 
@@ -66,7 +79,8 @@
 <script type="text/javascript">
     (function () {
         angular.module("myApp")
-            .controller("ModalController", function ($scope, $uibModalInstance, $window, $userService) {
+            .controller("ModalController", function ($scope, $uibModalInstance, $window, $userService, $uibModal) {
+
                 var vm = this;
                 vm.$userService = $userService;
 
@@ -76,12 +90,55 @@
                 };
 
                 vm.registerSuccess = function (response) {
-                    $uibModalInstance.close()
+                    console.log("Registered Successfully")
 
-                }
+                };
+
+                vm.loginSubmit = function (item) {
+                    return $userService.login(item)
+                        .then(vm.loginSuccess)
+                };
+
+                vm.loginSuccess = function (response) {
+                    location.reload();
+
+                };
+
+
+
                 vm.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
+
+                vm.openLoginModal = function () {
+                    $uibModalInstance.dismiss('cancel');
+                    $uibModal.open({
+                        templateUrl: "/Content/ModalTemplates/Login.html",
+                        controller: "ModalController",
+                        controllerAs: "modalCtrl",
+                        size: "md",
+                        backdrop: true,
+                        windowClass: "app-modal-window",
+                    }).result.then(function () {
+                    }, function (res) {
+                    });
+                };
+
+                vm.openRegisterModal = function () {
+                    $uibModalInstance.dismiss('cancel');
+                    $uibModal.open({
+                        templateUrl: "/Content/ModalTemplates/Register.html",
+                        controller: "ModalController",
+                        controllerAs: "modalCtrl",
+                        size: "md",
+                        backdrop: true,
+                        windowClass: "app-modal-window",
+                    }).result.then(function () {
+                    }, function (res) {
+                    });
+                }
+
+
             })
 
     })();
@@ -99,6 +156,8 @@
             vm.$uibModal = $uibModal;
             vm.openRegisterModal = _openRegisterModal;
             vm.openLoginModal = _openLoginModal;
+            vm.logoutSubmit = _logoutSubmit;
+            vm.logoutSuccess = _logoutSuccess;
 
             function _openRegisterModal() {
                 var modal = $uibModal.open({
@@ -125,25 +184,14 @@
                 }, function (res) {
                 });
             }
+            function _logoutSubmit() {
+                return $userService.logout()
+                    .then(vm.logoutSuccess)
+            };
 
-            //var modal = $uibModal.open({
-            //    templateUrl: "/Content/ModalTemplates/AddCommentModal.html",
-            //    controller: "ModalController",
-            //    controllerAs: "modalCtrl",
-            //    size: "md",
-            //    backdrop: true,
-            //    windowClass: "app-modal-window",
-            //    resolve: {
-            //        items: function () {
-            //            return vm.items;
-            //        }
-            //    }
-            //});
-            //modal.result.then(function (selectedItem) {
-            //    selectedItem.blogId = vm.blogId;
-            //}, function () {
-            //    console.log("Modal closed")
-            //});
+            function _logoutSuccess(response) {
+                location.reload();
+            };
         }
     })();
 

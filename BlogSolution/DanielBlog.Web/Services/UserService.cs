@@ -10,12 +10,13 @@ using DanielBlog.Web.Models;
 using DanielBlog.Web.Models.Requests;
 using SendGrid.Helpers.Mail;
 using DanielBlog.Web.Exceptions;
+using Microsoft.Owin.Security;
+using System.Security.Claims;
 
 namespace DanielBlog.Web.Services
 {
     public class UserService
     {
-
         //HttpContext is the current HttpRequest, GetOwinContext gets current logged in
         private static ApplicationUserManager GetUserManager()
         {
@@ -57,81 +58,62 @@ namespace DanielBlog.Web.Services
             }
 
         }
+        //This will sign in
+        //Why is it bool, why is it out string userId
+        public bool SignIn(UserLoginRequest payload)
+        {
+            bool state = false;
+            ApplicationUserManager userManager = GetUserManager();
+            IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+
+            ApplicationUser user = userManager.Find(payload.UserName, payload.Password);
+            if (user != null)
+            {
+                ClaimsIdentity signin = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, signin);
+                state = true;
+                return state;
+            }
+            return state;
+        }
+
+        public bool Logout()
+        {
+            bool result = false;
+
+            string user = GetCurrentUserId();
+
+            if (user != null)
+            {
+                IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+                authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                result = true;
+            }
+
+            return result;
+        }
 
 
-        //Login
+        //For Checking if Logged In
+        public static string GetCurrentUserId()
+        {
+            return HttpContext.Current.User.Identity.GetUserId();
+        }
 
+        //For Get Current User
+        public static bool IsLoggedIn()
+        {
+            return !string.IsNullOrEmpty(GetCurrentUserId());
+        }
 
-
-
-
-
-
-        ////This will sign in
-        ////Why is it bool, why is it out string userId
-        //public LoginRequest SignIn(string email, string password, out string userId)
-        //{
-        //    LoginRequest result = new LoginRequest();
-        //    userId = null;
-        //    ApplicationUserManager userManager = GetUserManager();
-        //    IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-
-        //    ApplicationUser user = userManager.Find(email, password);
-        //    if (user != null)
-        //    {
-        //        if (userManager.IsEmailConfirmed(user.Id))
-        //        {
-        //            ClaimsIdentity signin = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-        //            authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, signin);
-        //            result.EmailConfirmed = true;
-        //            result.LoginCredentials = true;
-        //            userId = user.Id;
-        //            return result;
-        //        }
-        //        else
-        //        {
-        //            result.EmailConfirmed = false;
-        //            result.LoginCredentials = true;
-        //            return result;
-        //        }
-        //    }
-        //    result.EmailConfirmed = false;
-        //    result.LoginCredentials = false;
-        //    return result;
-        //}
-        //public static bool SignIn(User currentUser)
-        //{
-        //    bool result = false;
-        //    ApplicationUserManager userManager = GetUserManager();
-        //    IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-
-        //    ApplicationUser user = userManager.FindById(currentUser.Email);
-        //    if (user != null)
-        //    {
-        //        ClaimsIdentity signin = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-        //        authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, signin);
-        //        result = true;
-        //    }
-        //    return result;
-        //}
-
-        ////For Checking if Logged In
-        //public static string GetCurrentUserId()
-        //{
-        //    return HttpContext.Current.User.Identity.GetUserId();
-        //}
-
-        ////For Get Current User
-        //public static bool IsLoggedIn()
-        //{
-        //    return !string.IsNullOrEmpty(GetCurrentUserId());
-        //}
-
-        ////Gets the entire aspnetuser row
+        //Gets the entire aspnetuser row
         //public static IdentityUser GetCurrentUser()
         //{
         //    if (!IsLoggedIn())
+        //    {
         //        return null;
+        //    }
+
         //    ApplicationUserManager userManager = GetUserManager();
 
         //    IdentityUser currentUser = userManager.FindById(GetCurrentUserId());
@@ -323,21 +305,7 @@ namespace DanielBlog.Web.Services
         //    return row;
         //}
 
-        //public static bool Logout()
-        //{
-        //    bool result = false;
 
-        //    IdentityUser user = GetCurrentUser();
-
-        //    if (user != null)
-        //    {
-        //        IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-        //        authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-        //        result = true;
-        //    }
-
-        //    return result;
-        //}
 
         //public ApplicationUser GetUser(string emailaddress)
         //{
