@@ -1,11 +1,32 @@
-﻿
-
-
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="modalCtrl.loginSubmit()">Register</button>
-                <button type="button" class="btn btn-default" ng-click="modalCtrl.cancel()">Close</button>
-            </div>
+﻿<div>
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="modalCtrl.cancel()">&times;</button>
+        <h4 class="modal-title">Login Form</h4>
     </div>
+    <div class="modal-body">
+        <div class="form-wrap">
+            <form name="loginForm" id="loginPageForm" ng-submit="modalCtrl.loginSubmit(modalCtrl.item)" novalidate>
+                <div class="form-group" ng-class="{'has-error' : loginForm.loginPageUserName.$invalid && loginForm.loginPageUserName.$touched }">
+                    <label for="loginPageUserName">User Name</label>
+                    <input type="text" name="loginPageUserName" ng-model="modalCtrl.item.userName" class="form-control" placeholder="User Name" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error' : loginForm.loginPagePassword.$invalid && loginForm.loginPagePassword.$touched }">
+                    <label for="loginPagePassword">Password</label>
+                    <input type="password" name="loginPagePassword" ng-model="modalCtrl.item.password" class="form-control" placeholder="Password" required>
+                </div>
+                <!--<a href="/Users/ResetPasswordRequest" style="font-size:12px">Forgot password?</a>
+                <br />-->
+                <a href="" ng-click="modalCtrl.openRegisterModal()">Don't have an account? Register</a>
+
+                <br />
+                <!--<a href="/Users/ResendEmailConfirmation" ng-show="user.emailConfirmation" style="font-size:12px">Resend Email Confirmation?</a>
+                <br />-->
+                <input type="submit" id="btn-login" class="btn btn-success pull-right" value="Log in" ng-disabled="loginForm.$invalid">
+                <br /><br /><br />
+            </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+</div>
+
