@@ -1,5 +1,4 @@
 ﻿<div>
-
     <div class="modal-header">
         <button type="button" class="close" ng-click="modalCtrl.cancel()">&times;</button>
         <h4 class="modal-title">Register Form</h4>
@@ -40,18 +39,20 @@
                      on-success="user.getResponse(response)" on-expire="user.expire()"></div>-->
 
                 <a href="" ng-click="modalCtrl.openLoginModal()">Already have an account?</a>
-
-                <br />
-                
-                <input type="submit" class="btn btn-success pull-right" value="Register" ng-disabled="registerForm.$invalid" /> <!--ng-click="modalCtrl.registerSubmit(modalCtrl.item)"-->
+                <div>
+                    <br />
+                    <div ng-repeat="error in modalCtrl.message">
+                        <strong style="color: red;">{{error}}</strong>
+                    </div>
+                </div>
+                <hr />
+                <input type="submit" class="btn btn-success pull-right" value="Register" ng-disabled="registerForm.$invalid || modalCtrl.disableTimeOut" /> <!--ng-click="modalCtrl.registerSubmit(modalCtrl.item)"-->
 
                 <br />
                 <br /><br />
-
-
             </form>
         </div>
-        <div class="modal-footer">
-        </div>
+        <!--<div class="modal-footer">
+        </div>-->
     </div>
 </div>

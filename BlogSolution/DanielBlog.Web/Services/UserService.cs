@@ -45,6 +45,7 @@ namespace DanielBlog.Web.Services
                 var urlBuilder = new System.Web.Mvc.UrlHelper(request.Request.RequestContext);
                 var callbackUrl = urlBuilder.Action("ConfirmEmail", "Users", new { userId = newUser.Id, code = code });
 
+                //TODO: Not working at the moment, not sure why
                 EmailAddress emailAddress = new EmailAddress(payload.Email, "");
                 ConfirmEmailRequest userTarget = new ConfirmEmailRequest(emailAddress, code, callbackUrl);
                 await EmailService.SendConfirmationEmail(userTarget);

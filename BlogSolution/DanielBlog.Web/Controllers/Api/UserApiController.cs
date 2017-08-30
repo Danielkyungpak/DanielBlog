@@ -1,4 +1,5 @@
-﻿using DanielBlog.Web.Models.Requests;
+﻿using DanielBlog.Web.Exceptions;
+using DanielBlog.Web.Models.Requests;
 using DanielBlog.Web.Models.Response;
 using DanielBlog.Web.Models.Shared;
 using DanielBlog.Web.Services;
@@ -22,11 +23,18 @@ namespace DanielBlog.Web.Controllers.Api
         [Route("Register")]
         public async Task<HttpResponseMessage> Register(UserRegisterRequest payload)
         {
-            UserService service = new UserService();
-            ItemResponse<int> response = new ItemResponse<int>();
-            IdentityUser user = await service.Register(payload);
-            return Request.CreateResponse(response);
+            try
+            {
+                UserService service = new UserService();
+                IdentityUser user = await service.Register(payload);
+                ItemResponse<IdentityUser> response = new ItemResponse<IdentityUser>();
+                return Request.CreateResponse(response);
 
+            }
+            catch (IdentityResultException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Result);
+            }
         }
 
         // POST: /User/Login

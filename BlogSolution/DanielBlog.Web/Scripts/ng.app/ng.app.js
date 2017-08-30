@@ -1,3 +1,3 @@
 ﻿(function() {
-	angular.module('myApp', ['ui.bootstrap', 'ngMessages']);
+	angular.module('myApp', ['ui.bootstrap', 'ngMessages', 'toastr']);
 })();

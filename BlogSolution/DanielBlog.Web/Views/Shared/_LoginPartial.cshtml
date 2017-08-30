@@ -56,19 +56,12 @@
                     .catch(onError);
             }
 
-            //function _changeCards(data) {
-            //    return $http.post('/api/poker/deal', data)
-            //        .then(onSuccessGetCards)
-            //        .catch(onError);
-            //}
-
             function onSuccess(response) {
-                console.log("success?")
                 return response.data;
             }
 
-            function onError() {
-                console.log("Something went wrong");
+            function onError(response) {
+                return response.data;
             }
         }
     })();
@@ -79,10 +72,12 @@
 <script type="text/javascript">
     (function () {
         angular.module("myApp")
-            .controller("ModalController", function ($scope, $uibModalInstance, $window, $userService, $uibModal) {
+            .controller("ModalController", function ($scope, $uibModalInstance, $window, $userService, $uibModal, toastr, $timeout) {
 
                 var vm = this;
                 vm.$userService = $userService;
+                vm.message = null;
+                vm.disableTimeOut = null;
 
                 vm.registerSubmit = function (item) {
                     return $userService.register(item)
@@ -90,9 +85,19 @@
                 };
 
                 vm.registerSuccess = function (response) {
-                    console.log("Registered Successfully")
-
+                    vm.disableTimeOut = true;
+                    if (!response.errors) {
+                        $uibModalInstance.dismiss('Registration Success');
+                        toastr.success("You have successfully registered. Please log in.")
+                    }
+                    else {
+                        vm.message = response.errors;
+                        $timeout(function () {
+                            vm.disableTimeOut = false;
+                        }, 4000);
+                    }
                 };
+
 
                 vm.loginSubmit = function (item) {
                     return $userService.login(item)
@@ -100,8 +105,16 @@
                 };
 
                 vm.loginSuccess = function (response) {
-                    location.reload();
-
+                    vm.disableTimeOut = true;
+                    if (response.isSuccessful) {
+                        location.reload();
+                    }
+                    else {
+                        vm.message = "Your user name and/or password is incorrect.";
+                        $timeout(function () {
+                            vm.disableTimeOut = false;
+                        }, 4000);
+                    }
                 };
 
 
