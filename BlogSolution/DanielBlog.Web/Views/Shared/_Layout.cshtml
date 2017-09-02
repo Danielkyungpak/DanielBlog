@@ -33,19 +33,21 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Blog", "Index", "Blog")</li>
-                    <li>@Html.ActionLink("People", "Index", "People")</li>
-                    <li>@Html.ActionLink("Image", "Upload", "Image")</li>
+                    @*<li>@Html.ActionLink("Blog", "Index", "Blog")</li>*@
+                    <li>@Html.ActionLink("DBTest", "Index", "People")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dungeons & Dragons<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("D&D Home", "Index", "DnD")</li>
+                            <li>@Html.ActionLink("D&D CharacterCreate", "CharacterCreate", "DnD")</li>
+
+                        </ul>
+                    </li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Poker", "Play", "Poker")</li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -66,7 +68,7 @@
         <div class="panel">
             <footer>
                 <br />
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                <p>Want to contact me? Go <a href="/Email/ContactMe/">Here</a></p>
             </footer>
         </div>
     </div>

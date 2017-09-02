@@ -1,0 +1,503 @@
+﻿
+@{
+    ViewBag.Title = "CharacterCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CharacterCreate</h2>
+
+
+@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="background:#efefef;">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav pull-right">
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Start</a></li>
+
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown open dtlview-drop">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Details <b class="caret"></b></a>
+                            <div class="dropdown-menu">
+                                <form>
+
+                                    <div class="row-fluid clearfix">
+                                        <h4 class="float-l"><i class="icon-truck icon-large"></i> Shipment Details</h4>
+                                        <ul class="nav nav-tabs pull-right">
+                                            <li class="active"><a href="#">General Information</a></li>
+                                            <li><a href="#">References and Special Instructions</a></li>
+                                            <li><a href="#">Items</a> </li>
+                                            <li><a href="#">Accessorials</a></li>
+                                        </ul>
+                                    </div><!--/.row-->
+
+                                    <hr class="hr-dark">
+
+                                    <div class="row-fluid">
+                                        <h4 class=""><i class="icon-plus-sign-alt"></i> General Information</h4>
+                                        <hr>
+                                        <div class="clearfix">
+                                            <fieldset class="span4">
+                                                <label>Origin</label>
+                                                <textarea id="textarea" name="textarea">Enter Address</textarea>
+
+                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
+                                                    <option>Commercial Location with Dock Doors</option>
+                                                    <option>Option one</option>
+                                                    <option>Option two</option>
+                                                </select>
+
+                                                <input type="text" class="input" placeholder="Add daterange picker">
+                                                <input type="text" class="input" placeholder="Add range slider">
+
+                                                <input class="input-small" type="text" placeholder="Pickup Date">
+                                                <input class="input-small" type="text" placeholder="Closes at">
+                                            </fieldset>
+
+                                            <fieldset class="span4">
+                                                <label>Destination</label>
+                                                <textarea id="textarea" name="textarea">Enter Address</textarea>
+
+                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
+                                                    <option>Commercial Location with Dock Doors</option>
+                                                    <option>Option one</option>
+                                                    <option>Option two</option>
+                                                </select>
+
+                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
+                                                    <option>Commercial Location with Dock Doors</option>
+                                                    <option>Option one</option>
+                                                    <option>Option two</option>
+                                                </select>
+
+                                                <input class="input-small" type="text" placeholder="Pickup Date">
+                                                <input class="input-small" type="text" placeholder="Closes at">
+                                            </fieldset>
+
+                                            <fieldset class="span4">
+                                                <label>Bill to location</label>
+                                                <textarea id="textarea" name="textarea">Billing Address</textarea>
+
+                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
+                                                    <option>Customer Level</option>
+                                                    <option>Option one</option>
+                                                    <option>Option two</option>
+                                                </select>
+
+                                                <div class="row-fluid">
+                                                    <h5>Terms</h5>
+                                                    <label class="radio">
+                                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                                                        Prepaid
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                                        Collect
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                                                        Third Party
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                                        C.O.D.
+                                                    </label>
+                                                </div>
+                                            </fieldset>
+                                        </div><!--/.clearfix-->
+                                    </div><!--/.row-->
+
+                                    <div class="row-fluid clearfix">
+                                        <h4><i class="icon-plus-sign-alt"></i> References &amp; Special Instructions</h4>
+                                        <hr>
+                                        <div class="form-inline">
+                                            <fieldset>
+                                                <select class="span5">
+                                                    <option>Customer Primary Reference</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+
+                                                <input type="text" class="span6" placeholder="Enter value here">
+
+                                                <button class="btn btn-inline btn-square"><i class="icon-plus"></i></button>
+                                                <button class="btn btn-inline btn-square"><i class="icon-trash"></i></button>
+                                            </fieldset>
+                                        </div>
+                                        <hr>
+                                        <label>Special Instructions</label>
+                                        <textarea id="textarea" class="span12" name="textarea" rows="2"></textarea>
+                                    </div><!--/.row-->
+
+                                    <div class="row-fluid">
+                                        <h4><i class="icon-plus-sign-alt"></i> Items</h4>
+                                        <hr>
+
+                                        <div class="form-inline">
+                                            <span class=" row-num">1.&nbsp;&nbsp;</span>
+                                            <input type="text" class="span2" placeholder="Item ID">
+                                            <input type="text" class="span2" placeholder="Handling Units">
+
+                                            <select class="span2">
+                                                <option>Pallets</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+
+                                            <select class="span2">
+                                                <option>Class</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+
+                                            <input type="text" class="span2" placeholder="Weight">
+
+                                            <select class="span1">
+                                                <option>lbs</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-inline">
+                                            <span class=" row-num">2.&nbsp;&nbsp;</span>
+                                            <input type="text" class="span2" placeholder="NMFC Code">
+                                            <input type="text" class="span2" placeholder="Description">
+
+
+
+
+                                            <select class="span2 ">
+                                                <option>Pallets</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+
+                                            <select class="span2">
+                                                <option>Class</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+
+                                            <input type="text" class="span2" placeholder="Weight">
+
+                                            <select class="span1">
+                                                <option>lbs</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                        </div>
+                                    </div><!--/.row-->
+
+                                    <hr>
+
+                                    <div class="row-fluid">
+                                        <h4><i class="icon-plus-sign-alt"></i> Accessorials</h4>
+                                        <hr>
+                                        <strong>Select all that apply</strong>
+                                        <div class="control-group label-small">
+                                            <div class="controls span3">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Man Delivery">Man Delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Airport Arbitrary Fee">Airport Arbitrary Fee
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="BOL Correction">BOL Correction
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Blanket Wrap">Blanket Wrap
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Construction Site">Construction Site
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Crated Household Goods">Crated Household Goods
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Customs Clearance">Customs Clearance
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Customs or In-Bond Freight">Customs or In-Bond Freight
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Decking">Decking
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Exhibition/Trade Show">Exhibition/Trade Show
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Extra Labor">Extra Labor
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Guaranteed Delivery">Guaranteed Delivery
+                                                </label>
+                                            </div>
+
+                                            <div class="controls span3">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Guaranteed Delivery AM">Guaranteed Delivery AM
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Guaranteed Delivery PM">Guaranteed Delivery PM
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Hazmat">Hazmat
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="High Traffic Surcharge">High Traffic Surcharge
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Inside delivery">Inside delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Island Delivery">Island Delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Liftgate">Liftgate
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Limited Access">Limited Access
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Marking and Tagging">Marking and Tagging
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Saturday Delivery">Saturday Delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Security Charge">Security Charge
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Sorting And Segregating">Sorting And Segregating
+                                                </label>
+                                            </div>
+
+                                            <div class="controls span3">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Storage">Storage
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Sunday &amp; Holiday Delivery">Sunday &amp; Holiday Delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Mining Site Delivery">Mining Site Delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="TSA Certified">TSA Certified
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Notification Prior to Delivery">Notification Prior to Delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Tarping">Tarping
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Out of Country DF">Out of Country DF
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Team Servlce">Team Servlce
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Out of Country NL">Out of Country NL
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Oversized">Oversized
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="PPA">PPA
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Pier/Wharf/CFS Station">Pier/Wharf/CFS Station
+                                                </label>
+                                            </div>
+
+                                            <div class="controls span3">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Protective service charge">Protective service charge
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Redelivery Fee">Redelivery Fee
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Resdential delivery">Resdential delivery
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Residential pickup">Residential pickup
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Temp Controlled">Temp Controlled
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Trl·Axle">Trl·Axle
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Weekdays 0900·1700">Weekdays 0900·1700
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Weekdays 1701 ..0659">Weekdays 1701 ..0659
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Weekend Delivery or Pickup">Weekend Delivery or Pickup
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Weigh Scales">Weigh Scales
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Weight Correction">Weight Correction
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="checkboxes" value="Window Delivery">Window Delivery
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div><!--/.row-->
+                                </form>
+                            </div><!--/.dropdown-menu-->
+                        </li>
+
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">View</a></li>
+
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Clear</a></li>
+
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Tips</a></li>
+                    </ul>
+
+                </div><!--/.navbar-inner-->
+            </div><!--/.navbar-->
+        </div><!--/.span-->
+    </div><!--/.row-fluid-->
+</div><!--/.container-->
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .factory('$peopleService', PeopleService)
+
+            PeopleService.$inject = ['$http'];
+
+            function PeopleService($http) {
+                return {
+                    createPerson: _createPerson,
+                    editPerson: _editPerson,
+                    getPerson: _getPerson
+                };
+
+                function _getPerson(id) {
+                    return $http.get('/api/people/' + id)
+                        .then(onSuccessGetPerson)
+                        .catch(onError);
+                }
+
+                function _createPerson(data) {
+                    return $http.post('/api/people', data)
+                        .then(onSuccessCreatePerson)
+                        .catch(onError);
+                }
+
+                function _editPerson(data) {
+                    return $http.put('/api/people', data)
+                        .then(onSuccessEditPerson)
+                        .catch(onError);
+                }
+
+                function onSuccessGetPerson(response) {
+                    return response.data;
+                }
+
+                function onSuccessCreatePerson(response) {
+                    return response.data;
+                }
+
+                function onSuccessEditPerson(response) {
+                    return response.data;
+                }
+
+                function onError() {
+                    console.log("Sucks");
+                }
+            }
+        })();
+    </script>
+
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .controller('peopleManageController', PeopleManageController)
+
+            PeopleManageController.$inject = ['$scope', '$peopleService'];
+
+            function PeopleManageController($scope, $peopleService) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.$peopleService = $peopleService;
+                vm.item = null;
+                vm.submit = _submit;
+                vm.getPersonSuccess = _getPersonSuccess;
+                vm.successCreation = _successCreation;
+                vm.successEdit = _successEdit;
+                vm.modelId = $("#manageId").val();
+
+                render()
+
+                function render() {
+                    if (vm.modelId > 0) {
+                        return $peopleService.getPerson(vm.modelId)
+                            .then(vm.getPersonSuccess)
+                    }
+                }
+                function _submit() {
+                    if (vm.modelId > 0) {
+                        vm.item.id = vm.modelId;
+                        return $peopleService.editPerson(vm.item)
+                            .then(vm.successEdit)
+                    }
+                    else {
+                        return $peopleService.createPerson(vm.item)
+                            .then(vm.successCreation)
+
+                    }
+                }
+
+                function _getPersonSuccess(data) {
+                    vm.item = data.item;
+                }
+
+                function _successCreation(data) {
+                    self.location = "/People/Index"
+                }
+
+                function _successEdit(data) {
+                    self.location = "/People/Index"
+                }
+
+            }
+        })();
+    </script>
+}
+
+
+

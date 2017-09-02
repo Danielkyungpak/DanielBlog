@@ -18,7 +18,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("dbo.CharacterDetails_Insert", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.Character_Insert", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Class", payload.Class);
@@ -145,7 +145,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("dbo.MainStats_Insert", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.MainBaseStats_Insert", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CharacterId", payload.CharacterId);
@@ -676,7 +676,35 @@ namespace DanielBlog.Web.Services
 
 
         //Creation of Character Full Db Calls, details,stats,health,hitdice,deathsaves,skillvalues,skillspecialty
+        public bool FullCharacterInsert (FullCharacterAddReq payload)
+        {
+            bool successCheck = true;
+            List<int> checkArray = null;
+            int a = CharacterDetailsInsert(payload.CharacterDetails);
+            checkArray.Add(a);
+            int b = MainStatsInsert(payload.MainStats);
+            checkArray.Add(b);
+            int c = HealthInsert(payload.Health);
+            checkArray.Add(c);
+            int d = HitDiceInsert(payload.HitDice);
+            checkArray.Add(d);
+            int e = DeathSavesInsert(payload.DeathSaves);
+            checkArray.Add(e);
+            int f = PlayerSkillInsert(payload.PlayerSkill);
+            checkArray.Add(f);
 
+            for (int i = 0; i < checkArray.Count; i++)
+            {
+                if (checkArray[i] == 0)
+                {
+                    successCheck = false;
+                    throw new System.Exception("There was a problem with the insert at " + checkArray[i] + " index."); 
+                }
+            }
+
+            return successCheck;
+
+        }
 
 
 

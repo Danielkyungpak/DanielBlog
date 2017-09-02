@@ -23,13 +23,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in pplCtrl.items">
-                <td>{{item.id}}</td>
-                <td>{{item.firstName}}</td>
-                <td>{{item.lastName}}</td>
+            <tr ng-repeat="person in pplCtrl.items">
+                <td>{{person.id}}</td>
+                <td>{{person.firstName}}</td>
+                <td>{{person.lastName}}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" ng-click="pplCtrl.edit(item)">Edit</button>
-                    <button type="button" class="btn btn-secondary" ng-click="pplCtrl.delete(item)">Delete</button>
+                    <button type="button" class="btn btn-primary" ng-click="pplCtrl.edit(person)">Edit</button>
+                    <button type="button" class="btn btn-secondary" ng-click="pplCtrl.delete(person)">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -59,22 +59,18 @@
 
 
                 function _getPeople() {
-                    console.log("getting people...");
                     return $http.get('/api/people')
                         .then(onSuccessGetPeople)
                         .catch(onError);
                 }
 
                 function onSuccessGetPeople(response) {
-                    console.log("successfully receieved data");
                     return response.data;
                 }
                 function onSuccessDeletePerson(response) {
-                    console.log("deleted")
                     return response.data;
                 }
                 function onError() {
-                    console.log("Sucks");
                 }
             }
         })();
@@ -103,7 +99,6 @@
                 render();
 
                 function render() {
-                    console.log("rendering...")
                     return vm.getPeople()
                         .then(onCompleteGetPeople)
                 }
@@ -113,15 +108,17 @@
                         .then(fillPeopleItems)
                 }
                 function fillPeopleItems(data) {
-                    console.log("u made it inside fill people");
-                    vm.items = data;
+                    vm.items = data.items;
+                    console.log(vm.items);
 
                 }
                 function onCompleteGetPeople() {
-                    console.log("on complete get people");
+                    console.log(vm.items);
                 }
-                function _edit(data) {
-                    self.location = "/People/" + data.id + "/edit";
+
+                function _edit(item) {
+                    console.log(item);
+                    //self.location = "/People/" + data.id + "/edit";
                 }
 
                 function _delete(item) {

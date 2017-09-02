@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using DanielBlog.Web.Models;
+using DanielBlog.Web.Models.Requests;
 
 namespace DanielBlog.Web
 {
@@ -20,6 +21,11 @@ namespace DanielBlog.Web
         {
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
+        }
+
+        internal void ContactMeEmail(ContactMeEmailRequest payload)
+        {
+            throw new NotImplementedException();
         }
     }
 

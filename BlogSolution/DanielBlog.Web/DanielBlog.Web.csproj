@@ -258,11 +258,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BlogApiController.cs" />
     <Compile Include="Controllers\Api\DnDApiController.cs" />
+    <Compile Include="Controllers\Api\EmailApiController.cs" />
     <Compile Include="Controllers\Api\ImageApiController.cs" />
     <Compile Include="Controllers\Api\PeopleApiController.cs" />
     <Compile Include="Controllers\Api\PokerApiController.cs" />
     <Compile Include="Controllers\Api\UserApiController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\DnDController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -289,14 +292,17 @@
     <Compile Include="Models\Requests\CommentAddRequest.cs" />
     <Compile Include="Models\Requests\CommentUpdateRequest.cs" />
     <Compile Include="Models\Requests\ConfirmEmailRequest.cs" />
+    <Compile Include="Models\Requests\ContactMeEmailRequest.cs" />
     <Compile Include="Models\Requests\DnD\CharacterDetailsAddReq.cs" />
     <Compile Include="Models\Requests\DnD\CharacterDetailsUpdateReq.cs" />
     <Compile Include="Models\Requests\DnD\DeathSavesAddReq.cs" />
     <Compile Include="Models\Requests\DnD\DeathSavesUpdateReq.cs" />
+    <Compile Include="Models\Requests\DnD\FullCharacterAddReq.cs" />
     <Compile Include="Models\Requests\DnD\HealthAddReq.cs" />
     <Compile Include="Models\Requests\DnD\HealthUpdateReq.cs" />
     <Compile Include="Models\Requests\DnD\HitDiceAddReq.cs" />
     <Compile Include="Models\Requests\DnD\HitDiceUpdateReq.cs" />
+    <Compile Include="Models\Requests\DnD\MainStatModifiersAddReq.cs" />
     <Compile Include="Models\Requests\DnD\MainStatsAddReq.cs" />
     <Compile Include="Models\Requests\DnD\MainStatsUpdateReq.cs" />
     <Compile Include="Models\Requests\DnD\PlayerSkillAddReq.cs" />
@@ -1271,6 +1277,9 @@
     <Content Include="Views\Blog\Manage.cshtml" />
     <Content Include="Views\Blog\Blog.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\DnD\Index.cshtml" />
+    <Content Include="Views\DnD\CharacterCreate.cshtml" />
+    <Content Include="Views\Email\ContactMe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
