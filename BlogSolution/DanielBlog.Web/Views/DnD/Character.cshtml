@@ -3,6 +3,13 @@
     ViewBag.Title = "Character";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<style>
+    .bold {
+        font-weight: bold;
+    }
+</style>
+
 <input type="hidden" id="hiddenInput" value="@Model.Item" />
 
 <div ng-controller="characterController as charCtrl">
@@ -48,12 +55,12 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{charCtrl.item.mainStats.strength}} 15</td>
-                <td>{{charCtrl.item.mainStats.dexterity}} 14</td>
-                <td>{{charCtrl.item.mainStats.constitution}} 12</td>
-                <td>{{charCtrl.item.mainStats.intelligence}} 10</td>
-                <td>{{charCtrl.item.mainStats.wisdom}} 12</td>
-                <td>{{charCtrl.item.mainStats.charisma}} 13</td>
+                <td>{{charCtrl.item.mainStats.strength}}</td>
+                <td>{{charCtrl.item.mainStats.dexterity}}</td>
+                <td>{{charCtrl.item.mainStats.constitution}}</td>
+                <td>{{charCtrl.item.mainStats.intelligence}}</td>
+                <td>{{charCtrl.item.mainStats.wisdom}}</td>
+                <td>{{charCtrl.item.mainStats.charisma}}</td>
             </tr>
         </tbody>
         <thead>
@@ -69,12 +76,12 @@
 
         <tbody>
             <tr>
-                <td>{{charCtrl.item.mainStatsModifiers.strengthPlus}} +2</td>
-                <td>{{charCtrl.item.mainStatsModifiers.dexterityPlus}} +3</td>
-                <td>{{charCtrl.item.mainStatsModifiers.constitutionPlus}} +1</td>
-                <td>{{charCtrl.item.mainStatsModifiers.intelligencePlus}} +0</td>
-                <td>{{charCtrl.item.mainStatsModifiers.wisdomPlus}} -1</td>
-                <td>{{charCtrl.item.mainStatsModifiers.charismaPlus}} +1</td>
+                <td>{{charCtrl.item.mainStatModifiers.strengthPlus}}</td>
+                <td>{{charCtrl.item.mainStatModifiers.dexterityPlus}}</td>
+                <td>{{charCtrl.item.mainStatModifiers.constitutionPlus}}</td>
+                <td>{{charCtrl.item.mainStatModifiers.intelligencePlus}}</td>
+                <td>{{charCtrl.item.mainStatModifiers.wisdomPlus}}</td>
+                <td>{{charCtrl.item.mainStatModifiers.charismaPlus}}</td>
             </tr>
         </tbody>
 
@@ -87,13 +94,18 @@
                 <td>Max Health</td>
                 <td>Temp Health</td>
                 <td>Hit Dice</td>
+                <td>Proficiency Bonus</td>
+                <td>Inspiration</td>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{charCtrl.item.health.maxHealth}} 30</td>
-                <td>{{charCtrl.item.health.tempHealth}} 0</td>
-                <td>{{charCtrl.item.hitDice}}5 D6</td>
+                <td>{{charCtrl.item.health.maxHealth}}</td>
+                <td>{{charCtrl.item.health.tempHealth}}</td>
+                <td>{{charCtrl.hitDice}}</td>
+                <td>{{charCtrl.item.mainStats.proficiencyBonus}}</td>
+                <td>{{charCtrl.item.mainStats.inspiration}}</td>
+
 
             </tr>
         </tbody>
@@ -103,22 +115,22 @@
     <table class="table-bordered table">
         <thead>
             <tr>
-                <td>Acrobatics</td>
-                <td>Animal Handling</td>
-                <td>Arcana</td>
-                <td>Athletics</td>
-                <td>Deception</td>
-                <td>History</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.acrobaticsPro}">Acrobatics</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.animalHandlingPro}">Animal Handling</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.arcanaPro}">Arcana</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.athleticsPro}">Athletics</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.deceptionPro}">Deception</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.historyPro}">History</td>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{charCtrl.item.playerSkill.acrobatics}}2</td>
-                <td>{{charCtrl.item.playerSkill.animalHandling}}2</td>
-                <td>{{charCtrl.item.playerSkil.arcana}}2</td>
-                <td>{{charCtrl.item.playerSkil.athletics}}2</td>
-                <td>{{charCtrl.item.playerSkil.deception}}2</td>
-                <td>{{charCtrl.item.playerSkil.history}}2</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.acrobaticsPro}">{{charCtrl.item.playerSkill.acrobatics}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.animalHandlingPro}">{{charCtrl.item.playerSkill.animalHandling}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.arcanaPro}">{{charCtrl.item.playerSkill.arcana}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.athleticsPro}">{{charCtrl.item.playerSkill.athletics}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.deceptionPro}">{{charCtrl.item.playerSkill.deception}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.historyPro}">{{charCtrl.item.playerSkill.history}}</td>
 
 
             </tr>
@@ -129,24 +141,24 @@
     <table class="table-bordered table">
         <thead>
             <tr>
-                <td>Insight</td>
-                <td>Intimidation</td>
-                <td>Investigation</td>
-                <td>Medicine</td>
-                <td>Nature</td>
-                <td>Perception</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.insightPro}">Insight</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.intimidationPro}">Intimidation</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.investigationPro}">Investigation</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.medicinePro}">Medicine</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.naturePro}">Nature</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.perceptionPro}">Perception</td>
 
 
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{charCtrl.item.playerSkill.insight}}2</td>
-                <td>{{charCtrl.item.playerSkill.intimidation}}2</td>
-                <td>{{charCtrl.item.playerSkil.investigation}}2</td>
-                <td>{{charCtrl.item.playerSkil.medicine}}2</td>
-                <td>{{charCtrl.item.playerSkil.nature}}2</td>
-                <td>{{charCtrl.item.playerSkil.perception}}2</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.insightPro}">{{charCtrl.item.playerSkill.insight}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.intimidationPro}">{{charCtrl.item.playerSkill.intimidation}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.investigationPro}">{{charCtrl.item.playerSkill.investigation}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.medicinePro}">{{charCtrl.item.playerSkill.medicine}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.naturePro}">{{charCtrl.item.playerSkill.nature}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.perceptionPro}">{{charCtrl.item.playerSkill.perception}}</td>
 
             </tr>
         </tbody>
@@ -155,22 +167,22 @@
     <table class="table-bordered table">
         <thead>
             <tr>
-                <td>Performance</td>
-                <td>Persuasion</td>
-                <td>Religion</td>
-                <td>Sleight of Hand</td>
-                <td>Stealth</td>
-                <td>Survival</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.performancePro}">Performance</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.persuasionPro}">Persuasion</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.religionPro}">Religion</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.sleightofHandPro}">Sleight of Hand</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.stealthPro}">Stealth</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.survivalPro}">Survival</td>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{charCtrl.item.playerSkill.performance}}2</td>
-                <td>{{charCtrl.item.playerSkill.persuasion}}2</td>
-                <td>{{charCtrl.item.playerSkil.religion}}2</td>
-                <td>{{charCtrl.item.playerSkil.sleightofHand}}2</td>
-                <td>{{charCtrl.item.playerSkil.stealth}}2</td>
-                <td>{{charCtrl.item.playerSkil.survival}}2</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.performancePro}">{{charCtrl.item.playerSkill.performance}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.persuasionPro}">{{charCtrl.item.playerSkill.persuasion}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.religionPro}">{{charCtrl.item.playerSkill.religion}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.sleightofHandPro}">{{charCtrl.item.playerSkill.sleightofHand}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.stealthPro}">{{charCtrl.item.playerSkill.stealth}}</td>
+                <td ng-class="{'bold' : charCtrl.item.playerSkill.survivalPro}">{{charCtrl.item.playerSkill.survival}}</td>
 
             </tr>
         </tbody>
@@ -192,16 +204,16 @@
 
             function CharacterService($http) {
                 return {
-                    charGetAll: _charGetAll
+                    charGetById: _charGetById
                 };
 
-                function _charGetAll() {
-                    return $http.get('/api/dnd/character/')
-                        .then(onSuccessCharAll)
+                function _charGetById(id) {
+                    return $http.get('/api/dnd/character/' + id)
+                        .then(onSuccessCharGetById)
                         .catch(onError);
                 }
 
-                function onSuccessCharAll(response) {
+                function onSuccessCharGetById(response) {
                     return response.data;
                 }
 
@@ -222,19 +234,111 @@
                 var vm = this;
                 vm.$scope = $scope;
                 vm.$characterService = $characterService;
-                vm.item = {};
-                vm.item.characterDetails = {};
-                vm.item.characterDetails = { id: 1, name: "Pak the Daniel", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 }
-
                 vm.charId = $("#hiddenInput").val();
+                vm.getChar = _getChar;
+                vm.onSuccessCharGet = _onSuccessCharGet;
+                vm.item;
+                vm.hitDice;
+                vm.proficiencyBonus;
 
                 render();
 
                 function render() {
+                    vm.getChar(vm.charId);
+                }
 
+                function _getChar(id) {
+                    return vm.$characterService.charGetById(id)
+                        .then(vm.onSuccessCharGet)
+
+                }
+                function _onSuccessCharGet(data) {
+                    vm.item = data.item;
+                    processHitDice(vm.item);
+                    vm.proficiencyBonus = vm.item.mainStats.proficiencyBonus;
+                    processProfiencies(vm.item.playerSkill);
                 }
 
 
+                function processHitDice(data) {
+                    if (data.hitDice.d4 > 0) {
+                        vm.hitDice = data.hitDice.d4 + " D4";
+                    }
+                    else if (data.hitDice.d6 > 0) {
+                        vm.hitDice = data.hitDice.d6 + " D6";
+                    }
+                    else if (data.hitDice.d8 > 0) {
+                        vm.hitDice = data.hitDice.d8 + " D8";
+                    }
+                    else if (data.hitDice.d10 > 0) {
+                        vm.hitDice = data.hitDice.d10 + " D10";
+                    }
+                    else {
+                        vm.hitDice = data.hitDice.d12 + " D12";
+                    }
+                }
+
+                function processProfiencies(data) {
+                    console.log(data);
+                    if (data.acrobaticsPro) {
+                        vm.item.playerSkill.acrobatics = data.acrobatics + vm.proficiencyBonus;
+                    }
+                    if (data.animalHandlingPro) {
+                        vm.item.playerSkill.animalHandling = data.animalHandling + vm.proficiencyBonus;
+                    }
+                    if (data.arcanaPro) {
+                        vm.item.playerSkill.arcana = data.arcana + vm.proficiencyBonus;
+                    }
+                    if (data.athleticsPro) {
+                        vm.item.playerSkill.athletics = data.athletics + vm.proficiencyBonus;
+                    }
+                    if (data.deceptionPro) {
+                        vm.item.playerSkill.deception = data.deception + vm.proficiencyBonus;
+                    }
+                    if (data.historyPro) {
+                        vm.item.playerSkill.history = data.history + vm.proficiencyBonus;
+                    }
+                    if (data.insightPro) {
+                        vm.item.playerSkill.insight = data.insight + vm.proficiencyBonus;
+                    }
+                    if (data.intimidationPro) {
+                        vm.item.playerSkill.intimidation = data.intimidation + vm.proficiencyBonus;
+                    }
+                    if (data.investigationPro) {
+                        vm.item.playerSkill.investigation = data.investigation + vm.proficiencyBonus;
+                    }
+                    if (data.medicinePro) {
+                        vm.item.playerSkill.medicine = data.medicine + vm.proficiencyBonus;
+                    }
+                    if (data.naturePro) {
+                        vm.item.playerSkill.nature = data.nature + vm.proficiencyBonus;
+                    }
+                    if (data.perceptionPro) {
+                        vm.item.playerSkill.perception = data.perception + vm.proficiencyBonus;
+                    }
+                    if (data.performancePro) {
+                        vm.item.playerSkill.performance = data.performance + vm.proficiencyBonus;
+                    }
+                    if (data.persuasionPro) {
+                        vm.item.playerSkill.persuasion = data.persuasion + vm.proficiencyBonus;
+                    }
+                    if (data.religionPro) {
+                        vm.item.playerSkill.religion = data.religion + vm.proficiencyBonus;
+                    }
+                    if (data.sleightofHandPro) {
+                        vm.item.playerSkill.sleightofHand = data.sleightofHand + vm.proficiencyBonus;
+                    }
+                    if (data.stealthPro) {
+                        vm.item.playerSkill.stealth = data.stealth + vm.proficiencyBonus;
+                    }
+                    if (data.survivalPro) {
+                        vm.item.playerSkill.survival = data.survival + vm.proficiencyBonus;
+                    }
+
+
+
+
+                }
 
             }
         })();

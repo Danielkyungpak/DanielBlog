@@ -58,7 +58,7 @@ namespace DanielBlog.Web.Services
 
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.Character_GetAll", sqlConn))
                 {
                     sqlConn.Open();
                     SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
@@ -67,8 +67,9 @@ namespace DanielBlog.Web.Services
                         int startingIndex = 0;
                         CharacterDetails c = new CharacterDetails();
                         c.Id = reader.GetInt32(startingIndex++);
-                        c.Class = reader.GetString(startingIndex++);
+                        c.Name = reader.GetString(startingIndex++);
                         c.Level = reader.GetInt32(startingIndex++);
+                        c.Class = reader.GetString(startingIndex++);
                         c.Background = reader.GetString(startingIndex++);
                         c.PlayerName = GetSafeString(reader, startingIndex++);
                         c.Race = reader.GetString(startingIndex++);
@@ -93,8 +94,9 @@ namespace DanielBlog.Web.Services
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", payload.Id);
-                    cmd.Parameters.AddWithValue("@Class", payload.Class);
+                    cmd.Parameters.AddWithValue("@Name", payload.Name);
                     cmd.Parameters.AddWithValue("@Level", payload.Level);
+                    cmd.Parameters.AddWithValue("@Class", payload.Class);
                     cmd.Parameters.AddWithValue("@Background", payload.Background);
                     cmd.Parameters.AddWithValue("@PlayerName", payload.PlayerName);
                     cmd.Parameters.AddWithValue("@Race", payload.Race);
@@ -114,7 +116,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.Character_GetById", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -125,8 +127,9 @@ namespace DanielBlog.Web.Services
                     {
                         int startingIndex = 0;
                         c.Id = reader.GetInt32(startingIndex++);
-                        c.Class = reader.GetString(startingIndex++);
+                        c.Name = reader.GetString(startingIndex++);
                         c.Level = reader.GetInt32(startingIndex++);
+                        c.Class = reader.GetString(startingIndex++);
                         c.Background = reader.GetString(startingIndex++);
                         c.PlayerName = GetSafeString(reader, startingIndex++);
                         c.Race = reader.GetString(startingIndex++);
@@ -183,7 +186,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.MainBaseStats_GetByCharId", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CharacterId", id);
@@ -276,7 +279,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.Health_GetByCharId", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CharacterId", id);
@@ -361,7 +364,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.HitDice_GetByCharId", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CharacterId", id);
@@ -448,7 +451,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.DeathSaves_GetByCharId", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CharacterId", id);
@@ -614,7 +617,7 @@ namespace DanielBlog.Web.Services
             string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("", sqlConn))
+                using (SqlCommand cmd = new SqlCommand("dbo.PlayerSkill_GetByCharId", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CharacterId", id);
@@ -670,17 +673,11 @@ namespace DanielBlog.Web.Services
         }
 
 
-        //Processing Modifiers (private method)
-
-
-
-
-
         //Creation of Character Full Db Calls, details,stats,health,hitdice,deathsaves,skillvalues,skillspecialty
         public bool FullCharacterInsert (FullCharacterAddReq payload)
         {
             bool successCheck = true;
-            List<int> checkArray = null;
+            List<int> checkArray = new List<int>();
 
             int charId = CharacterDetailsInsert(payload.CharacterDetails);
 
@@ -719,23 +716,21 @@ namespace DanielBlog.Web.Services
 
         }
 
-
-
         //Get Full Character Information with Modifiers, details,statvalues,modifiers,health,hitdice,deathsaves,skillvalues
         public FullCharacterInfo GetFullCharInfoByCharId(int id)
         {
             FullCharacterInfo FullCharInfo = new FullCharacterInfo();
             FullCharInfo.CharacterDetails = GetCharacterDetails(id);
-            FullCharInfo.MainStats = MainStatsByCharId(id);
+            FullCharInfo.MainStats = MainStatsByCharId(FullCharInfo.CharacterDetails.Id);
             FullCharInfo.MainStatModifiers = MainStatCalculate(FullCharInfo.MainStats);
-            FullCharInfo.Health = HealthByCharId(id);
-            FullCharInfo.HitDice = HitDiceByCharId(id);
-            FullCharInfo.DeathSaves = DeathSavesByCharId(id);
-            FullCharInfo.PlayerSkill = PlayerSkillByCharId(id); 
+            FullCharInfo.Health = HealthByCharId(FullCharInfo.CharacterDetails.Id);
+            FullCharInfo.HitDice = HitDiceByCharId(FullCharInfo.CharacterDetails.Id);
+            FullCharInfo.DeathSaves = DeathSavesByCharId(FullCharInfo.CharacterDetails.Id);
+            FullCharInfo.PlayerSkill = PlayerSkillByCharId(FullCharInfo.CharacterDetails.Id); 
             return FullCharInfo;
         }
 
-
+        //Processing Modifiers (private method)
         private MainStatModifiers MainStatCalculate (MainStats stats)
         {
             MainStatModifiers modifiers = new MainStatModifiers();

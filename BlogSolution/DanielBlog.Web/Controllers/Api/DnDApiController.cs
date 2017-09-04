@@ -1,5 +1,6 @@
 ﻿using DanielBlog.Web.Models.Domain.DnD;
 using DanielBlog.Web.Models.Requests.DnD;
+using DanielBlog.Web.Models.Response;
 using DanielBlog.Web.Models.Shared;
 using DanielBlog.Web.Services;
 using System;
@@ -18,6 +19,15 @@ namespace DanielBlog.Web.Controllers.Api
 
 
         //Character Detail GetAllCharacters
+        [Route("characters"), HttpGet]
+        public HttpResponseMessage CharactersGetAll()
+        {
+            DnDService dndService = new DnDService();
+            ItemsResponse<CharacterDetails> model = new ItemsResponse<CharacterDetails>();
+            model.Items = dndService.GetAllCharacterDetails();
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+
 
         //Character Detail GetById
 
@@ -55,5 +65,16 @@ namespace DanielBlog.Web.Controllers.Api
         }
 
         //Get Full Character Information with Modifiers 
+        [Route("character/{id}"), HttpGet]
+        public HttpResponseMessage CharactersGetAll(int id)
+        {
+            DnDService dndService = new DnDService();
+            ItemResponse<FullCharacterInfo> model = new ItemResponse<FullCharacterInfo>();
+            model.Item = dndService.GetFullCharInfoByCharId(id);
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+
+
+        
     }
 }

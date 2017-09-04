@@ -11,6 +11,7 @@
             <tr>
                 <td>Name</td>
                 <td>Level</td>
+                <td>Class</td>
                 <td>Background</td>
                 <td>Player Name</td>
                 <td>Race</td>
@@ -23,6 +24,7 @@
             <tr ng-click="charCtrl.editNav(char.id)">
                 <td>{{char.name}}</td>
                 <td>{{char.level}}</td>
+                <td>{{char.class}}</td>
                 <td>{{char.background}}</td>
                 <td>{{char.playerName}}</td>
                 <td>{{char.race}}</td>
@@ -49,7 +51,7 @@
                 };
 
                 function _charGetAll() {
-                    return $http.get('/api/dnd/character/')
+                    return $http.get('/api/dnd/characters/')
                         .then(onSuccessCharAll)
                         .catch(onError);
                 }
@@ -82,12 +84,7 @@
                 render();
 
                 function render() {
-                    vm.items = [{ id: 1, name: "Pak the Daniel", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 },
-                    { id: 2, name: "Joey", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 },
-                    { id: 3, name: "Alex", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 }
-                    ]
-                    console.log(vm.items);
-                    //vm.getAll();
+                    vm.getAll();
                 }
 
                 function _getAll() {

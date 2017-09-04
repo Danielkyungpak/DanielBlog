@@ -383,9 +383,9 @@
             angular.module("myApp")
                 .controller('characterCreateController', CharacterCreateController)
 
-            CharacterCreateController.$inject = ['$scope', '$characterService'];
+            CharacterCreateController.$inject = ['$scope', '$characterService', 'toastr', '$timeout'];
 
-            function CharacterCreateController($scope, $characterService) {
+            function CharacterCreateController($scope, $characterService, toastr, $timeout) {
                 var vm = this;
                 vm.$scope = $scope;
                 vm.$characterService = $characterService;
@@ -395,7 +395,7 @@
                 vm.tab = 1;
                 vm.setTab = _setTab;
                 vm.isSet = _isSet;
-
+                vm.submitPostSuccess = _submitPostSuccess
                 render()
 
                 function render() {
@@ -403,12 +403,21 @@
 
 
                 function _submit(data) {
-                    $characterService.charInsert(data);
+                    return $characterService.charInsert(data)
+                        .then(vm.submitPostSuccess)
                 }
 
                 function _submitPostSuccess(data) {
-                    vm.item = data.item;
+                    if (data.item == true) {
+                        toastr.success("Your character has been created. Redirecting to all characters");
+                        $timeout(function () {
+                            self.location = "/DnD/Characters/"
+                        }, 4000);
 
+                    }
+                    else {
+                        toastr.error("Something went wrong, please contact Daniel");
+                    }
                 }
 
                 function _setTab (newTab) {
