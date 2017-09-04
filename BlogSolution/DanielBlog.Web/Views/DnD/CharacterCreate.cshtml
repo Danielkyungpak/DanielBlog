@@ -4,435 +4,370 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CharacterCreate</h2>
+<div ng-controller="characterCreateController as charCtrl">
+    <form ng-submit="charCtrl.submit(charCtrl.item)" name="charCreationForm" novalidate>
+        <div class="row-fluid clearfix">
+            <h4 class="float-l">Character Creation</h4>
+            <ul class="nav nav-tabs pull-right">
+                <li ng-class="{ active: charCtrl.isSet(1) }"><a href="" ng-click="charCtrl.setTab(1)">General Information and Main Stats</a></li>
+                <li ng-class="{ active: charCtrl.isSet(2) }"><a href="" ng-click="charCtrl.setTab(2)">Health, Hit Dice and Death Saves</a></li>
+                <li ng-class="{ active: charCtrl.isSet(3) }"><a href="" ng-click="charCtrl.setTab(3)">Skills</a> </li>
+            </ul>
+        </div><!--/.row-->
+
+        <hr class="hr-dark">
+
+        <div ng-show="charCtrl.isSet(1)">
+            <div class="row">
+                <h4 class="text-center">General Information</h4>
+                <div class="clearfix col-lg-8 col-lg-offset-2">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="characterName">Character Name</label>
+                            <input type="text" ng-model="charCtrl.item.characterDetails.name" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="level">Level</label>
+                            <input type="number" ng-model="charCtrl.item.characterDetails.level" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <input type="text" ng-model="charCtrl.item.characterDetails.class" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="background">Background</label>
+                            <input type="text" ng-model="charCtrl.item.characterDetails.background" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="playerName">Player Name</label>
+                            <input type="text" ng-model="charCtrl.item.characterDetails.playerName" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="race">Race</label>
+                            <input type="text" ng-model="charCtrl.item.characterDetails.race" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="alignment">Alignment</label>
+                            <input type="text" ng-model="charCtrl.item.characterDetails.alignment" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="experiencePoints">Experience Points</label>
+                            <input type="number" ng-model="charCtrl.item.characterDetails.experiencePoints" required class="form-control" />
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <h4 class="text-center">Base Stats</h4>
+                <hr>
+
+                <div class="clearfix col-lg-8 col-lg-offset-2">
+
+                    <fieldset class="span4">
+                        <div class="form-group">
+                            <label for="strength">Strength</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.strength" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="dexterity">Dexterity</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.dexterity" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="constitution">Constitution</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.constitution" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="intelligence">Intelligence</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.intelligence" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="wisdom">Wisdom</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.wisdom" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="charisma">Charisma</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.charisma" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="proficiencyBonus">Proficiency Bonus</label>
+                            <input type="number" ng-model="charCtrl.item.mainStats.proficiencyBonus" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inspiration">Inspiration</label><br />
+                            <input type="checkbox" ng-model="charCtrl.item.mainStats.inspiration" ng-init="charCtrl.item.mainStats.inspiration = false" class="form-check-input" />
+                        </div>
+
+                    </fieldset>
+                    <hr />
+                </div>
+                <input type="button" value="Next (Health, Hit Dice, DeathSaves)" class="btn btn-default pull-right" ng-click="charCtrl.setTab(2)" />
+
+            </div>
+        </div>
+        <div ng-show="charCtrl.isSet(2)">
+
+            <div class="row">
+                <h4 class="text-center">Health Information</h4>
+
+                <div class="clearfix col-lg-8 col-lg-offset-2">
+
+                    <fieldset class="span4">
+                        <div class="form-group">
+                            <label for="maxHealth">Max Health</label>
+                            <input type="number" ng-model="charCtrl.item.health.maxHealth" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tempHealth">Temporary Health</label>
+                            <input type="number" ng-model="charCtrl.item.health.tempHealth" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="currentHealth">Current Health</label>
+                            <input type="number" ng-model="charCtrl.item.health.currentHealth" required class="form-control" />
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <h4 class="text-center">Hit Dice</h4>
+                <hr>
+                <div class="clearfix col-lg-8 col-lg-offset-2">
+
+                    <fieldset class="span4">
+                        <div class="form-group">
+                            <label for="d4">D4</label>
+                            <input type="number" ng-model="charCtrl.item.hitDice.d4" ng-init="charCtrl.item.hitDice.d4 = 0" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="d6">D6</label>
+                            <input type="number" ng-model="charCtrl.item.hitDice.d6" ng-init="charCtrl.item.hitDice.d6 = 0" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="d8">D8</label>
+                            <input type="number" ng-model="charCtrl.item.hitDice.d8" ng-init="charCtrl.item.hitDice.d8 = 0" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="d10">D10</label>
+                            <input type="number" ng-model="charCtrl.item.hitDice.d10" ng-init="charCtrl.item.hitDice.d10 = 0" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="d12">D12</label>
+                            <input type="number" ng-model="charCtrl.item.hitDice.d12" ng-init="charCtrl.item.hitDice.d12 = 0" required class="form-control" />
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <h4 class="text-center">Death Saves</h4>
+                <hr>
+                <div class="clearfix col-lg-8 col-lg-offset-2">
+
+                    <fieldset class="span4">
+                        <div class="form-group">
+                            <label for="successes">Successes</label>
+                            <input type="number" ng-model="charCtrl.item.deathSaves.successes" ng-init="charCtrl.item.deathSaves.successes = 0" required class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="failures">Failures</label>
+                            <input type="number" ng-model="charCtrl.item.deathSaves.failures" ng-init="charCtrl.item.deathSaves.failures = 0" required class="form-control" />
+                        </div>
+                    </fieldset>
+                    <hr />
+                </div>
+            </div>
+            <input type="button" value="Next (Character Skills)" class="btn btn-default pull-right" ng-click="charCtrl.setTab(3)" />
+            <input type="button" value="Back (Health, Hit Dice, DeathSaves)" class="btn btn-default pull-right" ng-click="charCtrl.setTab(1)" />
+        </div>
+
+        <div ng-show="charCtrl.isSet(3)">
+
+            <div class="row">
+                <h4 class="text-center">Skills</h4>
+                <div class="clearfix col-lg-8 col-lg-offset-2">
+
+                    <fieldset class="span4">
+                        <div class="form-group">
+                            <label for="acrobatics">Acrobatics</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.acrobatics" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.acrobaticsPro" ng-init="charCtrl.item.playerSkill.acrobaticsPro = false" type="checkbox">
+                                Acrobatics proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="animalHandling">Animal Handling</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.animalHandling" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.animalHandlingPro" ng-init="charCtrl.item.playerSkill.animalHandlingPro = false" type="checkbox">
+                                Animal Handling proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="arcana">Arcana</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.arcana" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.arcanaPro" ng-init="charCtrl.item.playerSkill.arcanaPro = false" type="checkbox">
+                                Arcana proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="athletics">Athletics</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.athletics" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.athleticsPro" ng-init="charCtrl.item.playerSkill.athleticsPro = false" type="checkbox">
+                                Athletics proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="deception">Deception</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.deception" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.deceptionPro" ng-init="charCtrl.item.playerSkill.deceptionPro = false" type="checkbox">
+                                Deception proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">History</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.history" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.historyPro" ng-init="charCtrl.item.playerSkill.historyPro = false" type="checkbox">
+                                History proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Insight</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.insight" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.insightPro" ng-init="charCtrl.item.playerSkill.insightPro = false" type="checkbox">
+                                Insight proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Intimidation</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.intimidation" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.intimidationPro" ng-init="charCtrl.item.playerSkill.intimidationPro = false" type="checkbox">
+                                Intimidation proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Investigation</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.investigation" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.investigationPro" ng-init="charCtrl.item.playerSkill.investigationPro = false" type="checkbox">
+                                Investigation proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Medicine</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.medicine" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.medicinePro" ng-init="charCtrl.item.playerSkill.medicinePro = false" type="checkbox">
+                                Medicine proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Nature</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.nature" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.naturePro" ng-init="charCtrl.item.playerSkill.naturePro = false" type="checkbox">
+                                Nature proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Perception</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.perception" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.perceptionPro" ng-init="charCtrl.item.playerSkill.perceptionPro = false" type="checkbox">
+                                Perception proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Performance</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.performance" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.performancePro" ng-init="charCtrl.item.playerSkill.performancePro = false" type="checkbox">
+                                Performance proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Persuasion</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.persuasion" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.persuasionPro" ng-init="charCtrl.item.playerSkill.persuasionPro = false" type="checkbox">
+                                Persuasion proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Religion</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.religion" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.religionPro" ng-init="charCtrl.item.playerSkill.religionPro = false" type="checkbox">
+                                Religion proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Sleight of Hand</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.sleightofHand" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.sleightofHandPro" ng-init="charCtrl.item.playerSkill.sleightofHandPro = false" type="checkbox">
+                                Sleight of Hand proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Stealth</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.stealth" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.stealthPro" ng-init="charCtrl.item.playerSkill.stealthPro = false" type="checkbox">
+                                Stealth proficiency?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="acrobatics">Survival</label>
+                            <input type="text" ng-model="charCtrl.item.playerSkill.survival" required class="form-control" />
+                            <label class="form-check-label">
+                                <input class="form-check-input" ng-model="charCtrl.item.playerSkill.survivalPro" ng-init="charCtrl.item.playerSkill.survivalPro = false" type="checkbox">
+                                Survival proficiency?
+                            </label>
+                        </div>
+                    </fieldset>
+                    <hr />
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success pull-right" @*ng-disabled="charCreationForm.$invalid"*@ value="Submit" />
+
+            <input type="button" value="Back (Health, Hit Dice, DeathSaves)" class="btn btn-default pull-right" ng-click="charCtrl.setTab(2)" />
+
+        </div>
+    </form>
+
+</div>
 
 
-@{
-    ViewBag.Title = "Manage";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<div class="container" style="background:#efefef;">
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <ul class="nav pull-right">
-                        <li class="divider-vertical"></li>
-                        <li><a href="#">Start</a></li>
-
-                        <li class="divider-vertical"></li>
-                        <li class="dropdown open dtlview-drop">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Details <b class="caret"></b></a>
-                            <div class="dropdown-menu">
-                                <form>
-
-                                    <div class="row-fluid clearfix">
-                                        <h4 class="float-l"><i class="icon-truck icon-large"></i> Shipment Details</h4>
-                                        <ul class="nav nav-tabs pull-right">
-                                            <li class="active"><a href="#">General Information</a></li>
-                                            <li><a href="#">References and Special Instructions</a></li>
-                                            <li><a href="#">Items</a> </li>
-                                            <li><a href="#">Accessorials</a></li>
-                                        </ul>
-                                    </div><!--/.row-->
-
-                                    <hr class="hr-dark">
-
-                                    <div class="row-fluid">
-                                        <h4 class=""><i class="icon-plus-sign-alt"></i> General Information</h4>
-                                        <hr>
-                                        <div class="clearfix">
-                                            <fieldset class="span4">
-                                                <label>Origin</label>
-                                                <textarea id="textarea" name="textarea">Enter Address</textarea>
-
-                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
-                                                    <option>Commercial Location with Dock Doors</option>
-                                                    <option>Option one</option>
-                                                    <option>Option two</option>
-                                                </select>
-
-                                                <input type="text" class="input" placeholder="Add daterange picker">
-                                                <input type="text" class="input" placeholder="Add range slider">
-
-                                                <input class="input-small" type="text" placeholder="Pickup Date">
-                                                <input class="input-small" type="text" placeholder="Closes at">
-                                            </fieldset>
-
-                                            <fieldset class="span4">
-                                                <label>Destination</label>
-                                                <textarea id="textarea" name="textarea">Enter Address</textarea>
-
-                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
-                                                    <option>Commercial Location with Dock Doors</option>
-                                                    <option>Option one</option>
-                                                    <option>Option two</option>
-                                                </select>
-
-                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
-                                                    <option>Commercial Location with Dock Doors</option>
-                                                    <option>Option one</option>
-                                                    <option>Option two</option>
-                                                </select>
-
-                                                <input class="input-small" type="text" placeholder="Pickup Date">
-                                                <input class="input-small" type="text" placeholder="Closes at">
-                                            </fieldset>
-
-                                            <fieldset class="span4">
-                                                <label>Bill to location</label>
-                                                <textarea id="textarea" name="textarea">Billing Address</textarea>
-
-                                                <select id="selectbasic" name="selectbasic" class="selectpicker">
-                                                    <option>Customer Level</option>
-                                                    <option>Option one</option>
-                                                    <option>Option two</option>
-                                                </select>
-
-                                                <div class="row-fluid">
-                                                    <h5>Terms</h5>
-                                                    <label class="radio">
-                                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                                        Prepaid
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                        Collect
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                                        Third Party
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                        C.O.D.
-                                                    </label>
-                                                </div>
-                                            </fieldset>
-                                        </div><!--/.clearfix-->
-                                    </div><!--/.row-->
-
-                                    <div class="row-fluid clearfix">
-                                        <h4><i class="icon-plus-sign-alt"></i> References &amp; Special Instructions</h4>
-                                        <hr>
-                                        <div class="form-inline">
-                                            <fieldset>
-                                                <select class="span5">
-                                                    <option>Customer Primary Reference</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-
-                                                <input type="text" class="span6" placeholder="Enter value here">
-
-                                                <button class="btn btn-inline btn-square"><i class="icon-plus"></i></button>
-                                                <button class="btn btn-inline btn-square"><i class="icon-trash"></i></button>
-                                            </fieldset>
-                                        </div>
-                                        <hr>
-                                        <label>Special Instructions</label>
-                                        <textarea id="textarea" class="span12" name="textarea" rows="2"></textarea>
-                                    </div><!--/.row-->
-
-                                    <div class="row-fluid">
-                                        <h4><i class="icon-plus-sign-alt"></i> Items</h4>
-                                        <hr>
-
-                                        <div class="form-inline">
-                                            <span class=" row-num">1.&nbsp;&nbsp;</span>
-                                            <input type="text" class="span2" placeholder="Item ID">
-                                            <input type="text" class="span2" placeholder="Handling Units">
-
-                                            <select class="span2">
-                                                <option>Pallets</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-
-                                            <select class="span2">
-                                                <option>Class</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-
-                                            <input type="text" class="span2" placeholder="Weight">
-
-                                            <select class="span1">
-                                                <option>lbs</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-inline">
-                                            <span class=" row-num">2.&nbsp;&nbsp;</span>
-                                            <input type="text" class="span2" placeholder="NMFC Code">
-                                            <input type="text" class="span2" placeholder="Description">
-
-
-
-
-                                            <select class="span2 ">
-                                                <option>Pallets</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-
-                                            <select class="span2">
-                                                <option>Class</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-
-                                            <input type="text" class="span2" placeholder="Weight">
-
-                                            <select class="span1">
-                                                <option>lbs</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-                                        </div>
-                                    </div><!--/.row-->
-
-                                    <hr>
-
-                                    <div class="row-fluid">
-                                        <h4><i class="icon-plus-sign-alt"></i> Accessorials</h4>
-                                        <hr>
-                                        <strong>Select all that apply</strong>
-                                        <div class="control-group label-small">
-                                            <div class="controls span3">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Man Delivery">Man Delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Airport Arbitrary Fee">Airport Arbitrary Fee
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="BOL Correction">BOL Correction
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Blanket Wrap">Blanket Wrap
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Construction Site">Construction Site
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Crated Household Goods">Crated Household Goods
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Customs Clearance">Customs Clearance
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Customs or In-Bond Freight">Customs or In-Bond Freight
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Decking">Decking
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Exhibition/Trade Show">Exhibition/Trade Show
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Extra Labor">Extra Labor
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Guaranteed Delivery">Guaranteed Delivery
-                                                </label>
-                                            </div>
-
-                                            <div class="controls span3">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Guaranteed Delivery AM">Guaranteed Delivery AM
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Guaranteed Delivery PM">Guaranteed Delivery PM
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Hazmat">Hazmat
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="High Traffic Surcharge">High Traffic Surcharge
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Inside delivery">Inside delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Island Delivery">Island Delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Liftgate">Liftgate
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Limited Access">Limited Access
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Marking and Tagging">Marking and Tagging
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Saturday Delivery">Saturday Delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Security Charge">Security Charge
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Sorting And Segregating">Sorting And Segregating
-                                                </label>
-                                            </div>
-
-                                            <div class="controls span3">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Storage">Storage
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Sunday &amp; Holiday Delivery">Sunday &amp; Holiday Delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Mining Site Delivery">Mining Site Delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="TSA Certified">TSA Certified
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Notification Prior to Delivery">Notification Prior to Delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Tarping">Tarping
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Out of Country DF">Out of Country DF
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Team Servlce">Team Servlce
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Out of Country NL">Out of Country NL
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Oversized">Oversized
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="PPA">PPA
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Pier/Wharf/CFS Station">Pier/Wharf/CFS Station
-                                                </label>
-                                            </div>
-
-                                            <div class="controls span3">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Protective service charge">Protective service charge
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Redelivery Fee">Redelivery Fee
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Resdential delivery">Resdential delivery
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Residential pickup">Residential pickup
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Temp Controlled">Temp Controlled
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Trl·Axle">Trl·Axle
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Weekdays 0900·1700">Weekdays 0900·1700
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Weekdays 1701 ..0659">Weekdays 1701 ..0659
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Weekend Delivery or Pickup">Weekend Delivery or Pickup
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Weigh Scales">Weigh Scales
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Weight Correction">Weight Correction
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="checkboxes" value="Window Delivery">Window Delivery
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div><!--/.row-->
-                                </form>
-                            </div><!--/.dropdown-menu-->
-                        </li>
-
-                        <li class="divider-vertical"></li>
-                        <li><a href="#">View</a></li>
-
-                        <li class="divider-vertical"></li>
-                        <li><a href="#">Clear</a></li>
-
-                        <li class="divider-vertical"></li>
-                        <li><a href="#">Tips</a></li>
-                    </ul>
-
-                </div><!--/.navbar-inner-->
-            </div><!--/.navbar-->
-        </div><!--/.span-->
-    </div><!--/.row-fluid-->
-</div><!--/.container-->
 
 @section scripts {
     <script type="text/javascript">
         (function () {
             angular.module("myApp")
-                .factory('$peopleService', PeopleService)
+                .factory('$characterService', CharacterService)
 
-            PeopleService.$inject = ['$http'];
+            CharacterService.$inject = ['$http'];
 
-            function PeopleService($http) {
+            function CharacterService($http) {
                 return {
-                    createPerson: _createPerson,
-                    editPerson: _editPerson,
-                    getPerson: _getPerson
+                    charInsert: _charInsert
                 };
 
-                function _getPerson(id) {
-                    return $http.get('/api/people/' + id)
-                        .then(onSuccessGetPerson)
+                function _charInsert(item) {
+                    return $http.post('/api/dnd/character/', item)
+                        .then(onSuccessCharInsert)
                         .catch(onError);
                 }
 
-                function _createPerson(data) {
-                    return $http.post('/api/people', data)
-                        .then(onSuccessCreatePerson)
-                        .catch(onError);
-                }
-
-                function _editPerson(data) {
-                    return $http.put('/api/people', data)
-                        .then(onSuccessEditPerson)
-                        .catch(onError);
-                }
-
-                function onSuccessGetPerson(response) {
-                    return response.data;
-                }
-
-                function onSuccessCreatePerson(response) {
-                    return response.data;
-                }
-
-                function onSuccessEditPerson(response) {
+                function onSuccessCharInsert(response) {
                     return response.data;
                 }
 
@@ -446,53 +381,43 @@
     <script type="text/javascript">
         (function () {
             angular.module("myApp")
-                .controller('peopleManageController', PeopleManageController)
+                .controller('characterCreateController', CharacterCreateController)
 
-            PeopleManageController.$inject = ['$scope', '$peopleService'];
+            CharacterCreateController.$inject = ['$scope', '$characterService'];
 
-            function PeopleManageController($scope, $peopleService) {
+            function CharacterCreateController($scope, $characterService) {
                 var vm = this;
                 vm.$scope = $scope;
-                vm.$peopleService = $peopleService;
-                vm.item = null;
+                vm.$characterService = $characterService;
+                vm.item;
                 vm.submit = _submit;
-                vm.getPersonSuccess = _getPersonSuccess;
-                vm.successCreation = _successCreation;
-                vm.successEdit = _successEdit;
-                vm.modelId = $("#manageId").val();
+                vm.default = 0;
+                vm.tab = 1;
+                vm.setTab = _setTab;
+                vm.isSet = _isSet;
 
                 render()
 
                 function render() {
-                    if (vm.modelId > 0) {
-                        return $peopleService.getPerson(vm.modelId)
-                            .then(vm.getPersonSuccess)
-                    }
-                }
-                function _submit() {
-                    if (vm.modelId > 0) {
-                        vm.item.id = vm.modelId;
-                        return $peopleService.editPerson(vm.item)
-                            .then(vm.successEdit)
-                    }
-                    else {
-                        return $peopleService.createPerson(vm.item)
-                            .then(vm.successCreation)
-
-                    }
                 }
 
-                function _getPersonSuccess(data) {
+
+                function _submit(data) {
+                    $characterService.charInsert(data);
+                }
+
+                function _submitPostSuccess(data) {
                     vm.item = data.item;
+
                 }
 
-                function _successCreation(data) {
-                    self.location = "/People/Index"
-                }
+                function _setTab (newTab) {
+                    vm.tab = newTab;
+                };
 
-                function _successEdit(data) {
-                    self.location = "/People/Index"
-                }
+                function _isSet (tabNum) {
+                    return vm.tab === tabNum;
+                };
 
             }
         })();

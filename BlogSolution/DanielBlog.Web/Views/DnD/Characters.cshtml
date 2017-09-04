@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "AllCharacters";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="characterGetController as charCtrl">
+    <h2>List of Characters</h2>
+    <table class="table-hover table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Level</td>
+                <td>Background</td>
+                <td>Player Name</td>
+                <td>Race</td>
+                <td>Alignment</td>
+                <td>Experience Points</td>
+
+            </tr>
+        </thead>
+        <tbody ng-repeat="char in charCtrl.items">
+            <tr ng-click="charCtrl.editNav(char.id)">
+                <td>{{char.name}}</td>
+                <td>{{char.level}}</td>
+                <td>{{char.background}}</td>
+                <td>{{char.playerName}}</td>
+                <td>{{char.race}}</td>
+                <td>{{char.alignment}}</td>
+                <td>{{char.experiencePoints}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .factory('$characterService', CharacterService)
+
+            CharacterService.$inject = ['$http'];
+
+            function CharacterService($http) {
+                return {
+                    charGetAll: _charGetAll
+                };
+
+                function _charGetAll() {
+                    return $http.get('/api/dnd/character/')
+                        .then(onSuccessCharAll)
+                        .catch(onError);
+                }
+
+                function onSuccessCharAll(response) {
+                    return response.data;
+                }
+
+                function onError() {
+                }
+            }
+        })();
+    </script>
+
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .controller('characterGetController', CharacterGetController)
+
+            CharacterGetController.$inject = ['$scope', '$characterService'];
+
+            function CharacterGetController($scope, $characterService) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.$characterService = $characterService;
+                vm.getAll = _getAll;
+                vm.onGetAllSuccess = _onGetAllSuccess;
+                vm.items;
+                vm.editNav = _editNav;
+                render();
+
+                function render() {
+                    vm.items = [{ id: 1, name: "Pak the Daniel", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 },
+                    { id: 2, name: "Joey", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 },
+                    { id: 3, name: "Alex", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 }
+                    ]
+                    console.log(vm.items);
+                    //vm.getAll();
+                }
+
+                function _getAll() {
+                    return vm.$characterService.charGetAll()
+                        .then(vm.onGetAllSuccess)
+                }
+
+                function _onGetAllSuccess(response) {
+                    vm.items = response.items;
+                }
+
+                function _editNav(id) {
+                    self.location = "/DnD/Character/" + id;
+                }
+
+            }
+        })();
+    </script>
+}
+
+
+
+
+

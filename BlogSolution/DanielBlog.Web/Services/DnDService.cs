@@ -21,6 +21,7 @@ namespace DanielBlog.Web.Services
                 using (SqlCommand cmd = new SqlCommand("dbo.Character_Insert", sqlConn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Name", payload.Name);
                     cmd.Parameters.AddWithValue("@Class", payload.Class);
                     cmd.Parameters.AddWithValue("@Level", payload.Level);
                     cmd.Parameters.AddWithValue("@Background", payload.Background);
@@ -680,18 +681,30 @@ namespace DanielBlog.Web.Services
         {
             bool successCheck = true;
             List<int> checkArray = null;
-            int a = CharacterDetailsInsert(payload.CharacterDetails);
+
+            int charId = CharacterDetailsInsert(payload.CharacterDetails);
+
+            if (charId == 0)
+            {
+                throw new System.Exception("The character insert is broke");
+            }
+
+            payload.MainStats.CharacterId = charId;
+            payload.Health.CharacterId = charId;
+            payload.HitDice.CharacterId = charId;
+            payload.DeathSaves.CharacterId = charId;
+            payload.PlayerSkill.CharacterId = charId;
+
+            int a = MainStatsInsert(payload.MainStats);
             checkArray.Add(a);
-            int b = MainStatsInsert(payload.MainStats);
+            int b = HealthInsert(payload.Health);
             checkArray.Add(b);
-            int c = HealthInsert(payload.Health);
+            int c = HitDiceInsert(payload.HitDice);
             checkArray.Add(c);
-            int d = HitDiceInsert(payload.HitDice);
+            int d = DeathSavesInsert(payload.DeathSaves);
             checkArray.Add(d);
-            int e = DeathSavesInsert(payload.DeathSaves);
+            int e = PlayerSkillInsert(payload.PlayerSkill);
             checkArray.Add(e);
-            int f = PlayerSkillInsert(payload.PlayerSkill);
-            checkArray.Add(f);
 
             for (int i = 0; i < checkArray.Count; i++)
             {

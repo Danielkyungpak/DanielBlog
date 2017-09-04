@@ -1280,6 +1280,8 @@
     <Content Include="Views\DnD\Index.cshtml" />
     <Content Include="Views\DnD\CharacterCreate.cshtml" />
     <Content Include="Views\Email\ContactMe.cshtml" />
+    <Content Include="Views\DnD\Characters.cshtml" />
+    <Content Include="Views\DnD\Character.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

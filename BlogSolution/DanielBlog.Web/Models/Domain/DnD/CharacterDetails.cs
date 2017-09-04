@@ -8,6 +8,7 @@ namespace DanielBlog.Web.Models.Domain.DnD
     public class CharacterDetails
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string Class { get; set; }
         public int Level { get; set; }
         public string Background { get; set; }

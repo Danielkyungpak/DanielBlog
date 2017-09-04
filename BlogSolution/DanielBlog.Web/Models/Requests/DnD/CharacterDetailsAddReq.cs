@@ -7,6 +7,7 @@ namespace DanielBlog.Web.Models.Requests.DnD
 {
     public class CharacterDetailsAddReq
     {
+        public string Name { get; set; }
         public string Class { get; set; }
         public int Level { get; set; }
         public string Background { get; set; }

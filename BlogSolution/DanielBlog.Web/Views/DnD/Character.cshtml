@@ -1,0 +1,247 @@
+﻿
+@{
+    ViewBag.Title = "Character";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="hiddenInput" value="@Model.Item" />
+
+<div ng-controller="characterController as charCtrl">
+    <h2>Character Profile</h2>
+    <h4>Basic Character Stats</h4>
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Level</td>
+                <td>Background</td>
+                <td>Player Name</td>
+                <td>Race</td>
+                <td>Alignment</td>
+                <td>Experience Points</td>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.characterDetails.name}}</td>
+                <td>{{charCtrl.item.characterDetails.level}}</td>
+                <td>{{charCtrl.item.characterDetails.background}}</td>
+                <td>{{charCtrl.item.characterDetails.playerName}}</td>
+                <td>{{charCtrl.item.characterDetails.race}}</td>
+                <td>{{charCtrl.item.characterDetails.alignment}}</td>
+                <td>{{charCtrl.item.characterDetails.experiencePoints}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <h4>Main Stats and Modifier</h4>
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <td>Strength</td>
+                <td>Dexterity</td>
+                <td>Constitution</td>
+                <td>Intelligence</td>
+                <td>Wisdom</td>
+                <td>Charisma</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.mainStats.strength}} 15</td>
+                <td>{{charCtrl.item.mainStats.dexterity}} 14</td>
+                <td>{{charCtrl.item.mainStats.constitution}} 12</td>
+                <td>{{charCtrl.item.mainStats.intelligence}} 10</td>
+                <td>{{charCtrl.item.mainStats.wisdom}} 12</td>
+                <td>{{charCtrl.item.mainStats.charisma}} 13</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <td>Strength (+/-)</td>
+                <td>Dexterity (+/-)</td>
+                <td>Constitution (+/-)</td>
+                <td>Intelligence (+/-)</td>
+                <td>Wisdom (+/-)</td>
+                <td>Charisma (+/-)</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.mainStatsModifiers.strengthPlus}} +2</td>
+                <td>{{charCtrl.item.mainStatsModifiers.dexterityPlus}} +3</td>
+                <td>{{charCtrl.item.mainStatsModifiers.constitutionPlus}} +1</td>
+                <td>{{charCtrl.item.mainStatsModifiers.intelligencePlus}} +0</td>
+                <td>{{charCtrl.item.mainStatsModifiers.wisdomPlus}} -1</td>
+                <td>{{charCtrl.item.mainStatsModifiers.charismaPlus}} +1</td>
+            </tr>
+        </tbody>
+
+    </table>
+    <hr />
+    <h4>Health and Hit Dice</h4>
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <td>Max Health</td>
+                <td>Temp Health</td>
+                <td>Hit Dice</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.health.maxHealth}} 30</td>
+                <td>{{charCtrl.item.health.tempHealth}} 0</td>
+                <td>{{charCtrl.item.hitDice}}5 D6</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <h4>Skills</h4>
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <td>Acrobatics</td>
+                <td>Animal Handling</td>
+                <td>Arcana</td>
+                <td>Athletics</td>
+                <td>Deception</td>
+                <td>History</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.playerSkill.acrobatics}}2</td>
+                <td>{{charCtrl.item.playerSkill.animalHandling}}2</td>
+                <td>{{charCtrl.item.playerSkil.arcana}}2</td>
+                <td>{{charCtrl.item.playerSkil.athletics}}2</td>
+                <td>{{charCtrl.item.playerSkil.deception}}2</td>
+                <td>{{charCtrl.item.playerSkil.history}}2</td>
+
+
+            </tr>
+        </tbody>
+
+
+    </table>
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <td>Insight</td>
+                <td>Intimidation</td>
+                <td>Investigation</td>
+                <td>Medicine</td>
+                <td>Nature</td>
+                <td>Perception</td>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.playerSkill.insight}}2</td>
+                <td>{{charCtrl.item.playerSkill.intimidation}}2</td>
+                <td>{{charCtrl.item.playerSkil.investigation}}2</td>
+                <td>{{charCtrl.item.playerSkil.medicine}}2</td>
+                <td>{{charCtrl.item.playerSkil.nature}}2</td>
+                <td>{{charCtrl.item.playerSkil.perception}}2</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <td>Performance</td>
+                <td>Persuasion</td>
+                <td>Religion</td>
+                <td>Sleight of Hand</td>
+                <td>Stealth</td>
+                <td>Survival</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{charCtrl.item.playerSkill.performance}}2</td>
+                <td>{{charCtrl.item.playerSkill.persuasion}}2</td>
+                <td>{{charCtrl.item.playerSkil.religion}}2</td>
+                <td>{{charCtrl.item.playerSkil.sleightofHand}}2</td>
+                <td>{{charCtrl.item.playerSkil.stealth}}2</td>
+                <td>{{charCtrl.item.playerSkil.survival}}2</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+
+
+</div>
+
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .factory('$characterService', CharacterService)
+
+            CharacterService.$inject = ['$http'];
+
+            function CharacterService($http) {
+                return {
+                    charGetAll: _charGetAll
+                };
+
+                function _charGetAll() {
+                    return $http.get('/api/dnd/character/')
+                        .then(onSuccessCharAll)
+                        .catch(onError);
+                }
+
+                function onSuccessCharAll(response) {
+                    return response.data;
+                }
+
+                function onError() {
+                }
+            }
+        })();
+    </script>
+
+    <script type="text/javascript">
+        (function () {
+            angular.module("myApp")
+                .controller('characterController', CharacterController)
+
+            CharacterController.$inject = ['$scope', '$characterService'];
+
+            function CharacterController($scope, $characterService) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.$characterService = $characterService;
+                vm.item = {};
+                vm.item.characterDetails = {};
+                vm.item.characterDetails = { id: 1, name: "Pak the Daniel", class: "Level", level: "5", background: "Paragon", playerName: "Daniel", race: "Halfling", alignment: "Paragon", experiencePoints: 10000 }
+
+                vm.charId = $("#hiddenInput").val();
+
+                render();
+
+                function render() {
+
+                }
+
+
+
+            }
+        })();
+    </script>
+}
+
+
+
+
+
